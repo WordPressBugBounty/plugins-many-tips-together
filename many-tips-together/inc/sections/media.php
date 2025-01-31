@@ -21,6 +21,15 @@ defined( 'ABSPATH' ) || exit;
 				'title'    => false,
 				'indent'   => false, 
 			),
+            array( # Disable auto attachment pages
+                'id'       => 'attachment_pages_enabled',
+                'type'     => 'switch',
+                'title'    => esc_html__( 'Disable attachment pages', 'mtt' ),
+                'desc'     => esc_html__( 'Prevents the creation of automatic pages for each uploaded file', 'mtt' ),
+                'default'  => false,
+                'on' => esc_html__('On', 'mtt'),
+                'off' => esc_html__('Off', 'mtt'),
+            ),
             array( # Sanitize filename
                 'id'       => 'media_sanitize_filename',
                 'type'     => 'switch',
@@ -34,6 +43,8 @@ defined( 'ABSPATH' ) || exit;
                     ) 
                 ),
                 'default'  => false,
+                'on' => esc_html__('On', 'mtt'),
+                'off' => esc_html__('Off', 'mtt'),
             ),
             array( # SVG upload
                 'id'       => 'media_allow_svg',
@@ -47,6 +58,8 @@ defined( 'ABSPATH' ) || exit;
                     ) 
                 ),
                 'default'  => false,
+                'on' => esc_html__('On', 'mtt'),
+                'off' => esc_html__('Off', 'mtt'),
             ),
             array( # Big image threshold
                 'id'       => 'media_big_image_disable',
@@ -60,6 +73,8 @@ defined( 'ABSPATH' ) || exit;
                     ) 
                 ),
                 'default'  => false,
+                'on' => esc_html__('On', 'mtt'),
+                'off' => esc_html__('Off', 'mtt'),
             ),
             array( ## RSS time
                 'id'       => 'media_big_image_size',
@@ -86,12 +101,16 @@ defined( 'ABSPATH' ) || exit;
                 'type'     => 'switch',
                 'title'    => esc_html__( 'Bigger thumbnails in the default column', 'mtt' ),
                 'default'  => false,
+                'on' => esc_html__('On', 'mtt'),
+                'off' => esc_html__('Off', 'mtt'),
             ),
             array( # ID Column
                 'id'       => 'media_image_id_column_enable',
                 'type'     => 'switch',
                 'title'    => esc_html__( 'ID column', 'mtt' ),
                 'default'  => false,
+                'on' => esc_html__('On', 'mtt'),
+                'off' => esc_html__('Off', 'mtt'),
             ),
             array( # Image Size column
                 'id'       => 'media_image_size_column_enable',
@@ -100,6 +119,8 @@ defined( 'ABSPATH' ) || exit;
                 'desc' => esc_html__( 'Tip via:', 'mtt' )
                     . ' <a href="https://wordpress.stackexchange.com/q/30894/12615">WordPress Answers</a>',
                     'default'  => false,
+                    'on' => esc_html__('On', 'mtt'),
+                    'off' => esc_html__('Off', 'mtt'),
                 ),
                 array( # List All Thumbs
                 'id'       => 'media_image_thubms_list_column_enable',
@@ -108,6 +129,8 @@ defined( 'ABSPATH' ) || exit;
                 'desc' => esc_html__( 'Tip via: ', 'mtt' )
                     . ' <a href="https://wordpress.stackexchange.com/q/7757/12615">WordPress Answers</a>',                   
                 'default'  => false,
+                'on' => esc_html__('On', 'mtt'),
+                'off' => esc_html__('Off', 'mtt'),
             ),
             array( # EXIF
                 'id'       => 'media_camera_exif',
@@ -118,6 +141,8 @@ defined( 'ABSPATH' ) || exit;
                     '<code>_wp_attachment_metadata</code>'
                 ),
                 'default'  => false,
+                'on' => esc_html__('On', 'mtt'),
+                'off' => esc_html__('Off', 'mtt'),
             ),
         ]
 	)

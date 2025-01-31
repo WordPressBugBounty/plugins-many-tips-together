@@ -105,6 +105,7 @@ if ( ! class_exists( 'Redux_Color_Scheme' ) ) {
 
 			// Waiting message.
 			echo '<div id="redux-' . esc_attr( $field_id ) . '-scheme-wait-message" style="display:none;">';
+			// phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage -- Icon hard coded for project.
 			echo '   <h1><img alt="Please wait..." src="' . esc_url( $this->url ) . 'img/busy.gif" /> Please wait...</h1>';
 			echo '</div>';
 
@@ -219,6 +220,8 @@ if ( ! class_exists( 'Redux_Color_Scheme' ) ) {
                                     class="noUpdate redux-import-scheme-button button-secondary">' . esc_html__( 'Import', 'redux-framework' ) . '
                                 </a>';
 
+				echo '          <input type="file" accept="application/json" id="redux-color-scheme-upload-file" size="50">';
+
 				if ( $this->field['tooltip_toggle'] && $tt_in_use ) {
 					$checked = '';
 					if ( $tt_toggle_state ) {
@@ -258,15 +261,6 @@ if ( ! class_exists( 'Redux_Color_Scheme' ) ) {
 
 			// Set up min files for dev_mode = false.
 			$min = Redux_Functions::is_min();
-
-			// One-Click Upload.
-			wp_enqueue_script(
-				'redux-ocupload',
-				$this->url . 'vendor/jquery.ocupload' . $min . '.js',
-				array( 'jquery' ),
-				'1.1.2',
-				true
-			);
 
 			// Field dependent JS.
 			wp_enqueue_script(
@@ -321,7 +315,7 @@ if ( ! class_exists( 'Redux_Color_Scheme' ) ) {
 		}
 
 		/**
-		 * If this field requires any scripts or css, define this function and register/enqueue the scripts/css
+		 * If this field requires any scripts or CSS, define this function and register/enqueue the scripts/css
 		 *
 		 * @since       1.0.0
 		 * @access      private

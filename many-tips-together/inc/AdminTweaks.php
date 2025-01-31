@@ -8,7 +8,7 @@ class AdminTweaks {
     /**
      * Plugin current version
      */
-    const VERSION = "3.2.1";
+    const VERSION = "3.3";
 
     /**
      * Plugin name
@@ -44,7 +44,13 @@ class AdminTweaks {
 		return self::$_instance;
 	}
 
-    public function init() {
+    public function loaded() 
+    {
+        /* Workaround for translations not loading on the plugin page */
+        if ( isset($_GET['page']) && 'admintweaks' == $_GET['page'] ) {
+            $this->load_textdomain(true);
+        }
+        
         // defined on inc/config.php
         global $adtw_option;
 
@@ -67,7 +73,26 @@ class AdminTweaks {
         new HooksUsers();
         new HooksLogin();
         new HooksMaintenance();
+
     }
+
+    /**
+	 * Text Domain
+	 *
+	 */
+	public function load_textdomain($plugin_page=false) 
+    {
+        do_action('qm/debug',print_r(['LOAD DOMAIN',$plugin_page?'plugin_page':'not plugin_page'],true));
+
+        $domain = 'mtt';
+        $plugin_rel_path = ADTW_SLUG.'/languages';
+        load_plugin_textdomain($domain, false, $plugin_rel_path);
+        
+        // Register with WordPress's just-in-time loader
+        if (function_exists('_load_textdomain_just_in_time')) {
+            _load_textdomain_just_in_time($domain);
+        }
+	}
 
     /**
      * Get option key validating existence
@@ -170,6 +195,7 @@ class AdminTweaks {
 
     /**
      * Get stored Admin Bar items
+     * - removes our own item if exists
      *
      * @return array
      */
@@ -177,6 +203,9 @@ class AdminTweaks {
         global $adtw_option;
         $support = get_option("$adtw_option-support", array());
         $current = isset($support['current_adminbar']) ? $support['current_adminbar'] : [];
+        if ( isset($current['adtw-site-name']) ) {
+            unset($current['adtw-site-name']);
+        }
         return $current;
     }
 
@@ -287,9 +316,11 @@ class AdminTweaks {
      * @return array
      */
     private function _buildCPTs() {
-		$args = array( /*'public'	 => true,*/ 'show_ui'	 => true );
-		$cpts = get_post_types( $args );
-		unset( $cpts['attachment'], $cpts['wp_block'], $cpts['wp_navigation'] );
+		$cpts = get_post_types([
+            'public'	 => true, 
+            'show_ui'	 => true
+        ]);
+		unset( $cpts['attachment'] );
         return $cpts;
     }
 
@@ -479,7 +510,40 @@ class AdminTweaks {
 		return false;
 	}
 
-    	/**
+    /**
+     * Check if WP is running a translation
+     *
+     * @return boolean
+     */
+    public function is_translation() 
+    {
+        $current_language = get_locale();
+        $default_language = 'en_US';
+        return ($current_language !== $default_language);
+    }
+
+    /**
+     * Check if the /wp-admin/customize.php submenu exists
+     *
+     * @return boolean
+     */
+    public function customize_menu_exists() {
+        global $submenu;
+        $menu_slug = 'customize';
+        foreach ($submenu as $menu_item) {
+            if ( is_array($menu_item) ) {
+                foreach ($menu_item as $key => $value ) {
+                    if (isset($menu_item[$key][1]) && $menu_item[$key][1] === $menu_slug) {
+                        return true;
+                    }
+                }
+            }
+        }
+    
+        return false;
+    }
+
+    /**
 	 * Position element at the end of array
 	 * 
 	 * @param array $src

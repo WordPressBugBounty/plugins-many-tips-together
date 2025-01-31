@@ -17,6 +17,9 @@ class SettingsPage {
             9999
         );
 
+
+        # I THINK THIS IS OBSOLETE, NOT SURE YET :D
+        /*
         add_action(
             'load-settings_page_admintweaks', 
             function(){
@@ -26,7 +29,7 @@ class SettingsPage {
                     999999
                 );
             }
-        );
+        );*/
 
         # ADTW()->debug("Admin Tweaks v".AdminTweaks::VERSION);
         
@@ -38,13 +41,21 @@ class SettingsPage {
         
         /* Redux CSS */
         add_action(
-            'redux/page/' . $adtw_option . '/enqueue',
+            "redux/page/$adtw_option/enqueue",
             [__CLASS__, 'add_panel_css']
+        );
+
+        /*add_filter("redux/options/$adtw_option/field/adminbar_howdy_original_text", [__CLASS__, 'conditional_field_based_on_language'], 10);*/
+
+        /* Redux JS */
+        add_action(
+            'redux/page/' . $adtw_option . '/enqueue',
+            [__CLASS__, 'add_panel_js']
         );
 
         /* Redux Help Tab */
         add_action(
-            'redux/page/' . $adtw_option . '/load',
+            "redux/page/$adtw_option/load",
             [__CLASS__, 'redux_load']
         );
 
@@ -162,6 +173,28 @@ class SettingsPage {
             'all'
         );  
         wp_enqueue_style('redux-custom-css');
+        # Hide option if lang is en_EN
+        if ( !ADTW()->is_translation() ) {
+            echo "<style>tr.howdy-translated{display:none !important;}</style>";
+        }
+    }
+
+    /**
+     * not used by now
+     *
+     * @return void
+     */
+    public static function add_panel_js() 
+    {
+        $js = '/assets/adtw.js';
+        wp_register_script(
+            'redux-custom-js',
+            ADTW_URL . $js,
+            [ 'jquery' ], 
+            ADTW()->cache($js)
+        );  
+        wp_enqueue_script('redux-custom-js');
+        wp_localize_script( 'redux-custom-js', "adtw_obj", array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
     }
 
 

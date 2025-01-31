@@ -33,6 +33,8 @@ defined( 'ABSPATH' ) || exit;
                         'https://www.wpbeginner.com/news/blogrolls-to-be-removed-in-wordpress-3-5-here-is-how-to-keep-them/' 
                     ),
                 'default'  => false,
+                'on' => esc_html__('On', 'mtt'),
+                'off' => esc_html__('Off', 'mtt'),
                 'hint'     => array(
 					'title'   => '',
 					'content' => ADTW()->renderHintImg('general-link-manager.jpg'),
@@ -43,6 +45,8 @@ defined( 'ABSPATH' ) || exit;
                 'type'     => 'switch',
                 'title'    => esc_html__( 'Disable the admin email verification', 'mtt' ),
                 'default'  => false,
+                'on' => esc_html__('On', 'mtt'),
+                'off' => esc_html__('Off', 'mtt'),
                 'hint'     => array(
 					'title'   => '',
 					'content' => ADTW()->renderHintImg('general-email-verify.png'),
@@ -53,21 +57,27 @@ defined( 'ABSPATH' ) || exit;
                 'type'     => 'switch',
                 'title'    => esc_html__( 'Warn about Blocked Blog', 'mtt' ),
                 'desc'     => esc_html__( 'Add admin notice alerting that Settings &gt;&gt; Reading &gt;&gt; Search Engine Visibility is disabled. Shown on Settings/Tools/Plugins.', 'mtt' ),
-                'default'  => false
+                'default'  => false,
+                'on' => esc_html__('On', 'mtt'),
+                'off' => esc_html__('Off', 'mtt')
             ),
             array( # Remove WP creator
                 'id'       => 'wpdisable_version_full',
                 'type'     => 'switch',
                 'title'    => esc_html__( 'Eliminate WP version in &lt;head&gt;', 'mtt' ),
                 'desc'     => '<strike><code>&lt;meta name="generator" content="WordPress 6.1.1" /&gt;</code></strike>',
-                'default'  => false
+                'default'  => false,
+                'on' => esc_html__('On', 'mtt'),
+                'off' => esc_html__('Off', 'mtt')
             ),
             array( # Remove WP version number
                 'id'       => 'wpdisable_version_number',
                 'type'     => 'switch',
                 'title'    => esc_html__( 'Eliminate only WP version in &lt;head&gt;', 'mtt' ),
                 'desc'     => '<code>&lt;meta name="generator" content="WordPress <strike>6.1.1</strike>" /&gt;</code>',
-                'default'  => false
+                'default'  => false,
+                'on' => esc_html__('On', 'mtt'),
+                'off' => esc_html__('Off', 'mtt')
             ),
             array( # Disable scripts versioning
                 'id'       => 'wpdisable_scripts_versioning',
@@ -79,7 +89,9 @@ defined( 'ABSPATH' ) || exit;
                     'WordPress Answers', 
                     'https://wordpress.stackexchange.com/a/96325/12615' 
                 ),
-                'default'  => false
+                'default'  => false,
+                'on' => esc_html__('On', 'mtt'),
+                'off' => esc_html__('Off', 'mtt')
             ),
             array( # Disable Gutenberg
                 'id'       => 'wpdisable_gutenberg',
@@ -114,20 +126,26 @@ defined( 'ABSPATH' ) || exit;
                         'WordPress Answers', 
                         'https://wordpress.stackexchange.com/q/13000/12615' 
                     ),
-                'default'  => false
+                'default'  => false,
+                'on' => esc_html__('On', 'mtt'),
+                'off' => esc_html__('Off', 'mtt')
             ),
             array( # Block upgrade notices for all
                 'id'       => 'wpblock_update_wp_all',
                 'type'     => 'switch',
                 'title'    => esc_html__( 'Block WordPress upgrade notice for everyone', 'mtt' ),
-                'default'  => false
+                'default'  => false,
+                'on' => esc_html__('On', 'mtt'),
+                'off' => esc_html__('Off', 'mtt')
             ),
             array( # Redirect About Page
                 'id'       => 'wpblock_update_screen',
                 'type'     => 'switch',
                 'title' => esc_html__( 'Redirect About page after upgrading.', 'mtt' ),
                 'desc' => esc_html__( 'After upgrading WordPress, the default behavior is redirecting to the About page. This option changes that to going back to the very Upgrade screen.', 'mtt' ),
-                'default'  => false
+                'default'  => false,
+                'on' => esc_html__('On', 'mtt'),
+                'off' => esc_html__('Off', 'mtt')
             ),
 
             array( ####### PRIVACY
@@ -141,7 +159,9 @@ defined( 'ABSPATH' ) || exit;
                 'type'     => 'switch',
                 'title' => esc_html__( 'Disable Self Ping', 'mtt' ),
                 'desc' => esc_html__( 'Prevents WordPress from sending pings/trackbacks to your own site.', 'mtt' ),
-                'default'  => false
+                'default'  => false,
+                'on' => esc_html__('On', 'mtt'),
+                'off' => esc_html__('Off', 'mtt')
             ),
             array( # Redirect unauthorized
                 'id'       => 'wpdisable_redirect_disallow',
@@ -154,7 +174,9 @@ defined( 'ABSPATH' ) || exit;
                         'https://wordpress.stackexchange.com/q/57206/12615'
                     )
                 ),
-                'default'  => false
+                'default'  => false,
+                'on' => esc_html__('On', 'mtt'),
+                'off' => esc_html__('Off', 'mtt')
             ),
 
             array( ####### RSS
@@ -174,7 +196,9 @@ defined( 'ABSPATH' ) || exit;
                         'https://wordpress.stackexchange.com/a/1896/12615'
                     )
                 ),
-                'default'  => false
+                'default'  => false,
+                'on' => esc_html__('On', 'mtt'),
+                'off' => esc_html__('Off', 'mtt')
             ),
             array( ## RSS time
                 'id'       => 'wprss_delay_publish_time',
@@ -216,7 +240,9 @@ defined( 'ABSPATH' ) || exit;
                     esc_html__( 'See', 'mtt'),
                     esc_html__( 'documentation', 'mtt'),
                 ),
-                'default'  => false
+                'default'  => false,
+                'on' => esc_html__('On', 'mtt'),
+                'off' => esc_html__('Off', 'mtt')
             ),
             array( # Disable WP Texturize selectively
                 'id'       => 'wpdisable_texturize_some',
@@ -271,7 +297,9 @@ defined( 'ABSPATH' ) || exit;
                         'https://wordpress.stackexchange.com/a/17034/12615'
                     )
                 ),
-                'default'  => false
+                'default'  => false,
+                'on' => esc_html__('On', 'mtt'),
+                'off' => esc_html__('Off', 'mtt')
             ),
         ]
 	)

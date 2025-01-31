@@ -28,6 +28,8 @@ defined( 'ABSPATH' ) || exit;
                 'title'    => esc_html__( 'ALL TYPES: Empty Trash button', 'mtt' ),
                 'desc'    => esc_html__( 'nowadays, we need 3 clicks to empty the trash,<br>this button will do it with 1 click', 'mtt' ),
                 'default'  => false,
+                'on' => esc_html__('On', 'mtt'),
+                'off' => esc_html__('Off', 'mtt'),
                 'hint'     => array(
 					'title'   => '',
 					'content' => "<br>".ADTW()->renderHintImg('trash-button.png'),
@@ -38,6 +40,8 @@ defined( 'ABSPATH' ) || exit;
                 'type'     => 'switch',
                 'title'    => esc_html__( 'ALL TYPES: Duplicate Post and Delete Revisions', 'mtt' ),
                 'default'  => false,
+                'on' => esc_html__('On', 'mtt'),
+                'off' => esc_html__('Off', 'mtt'),
                 'hint'     => array(
 					'title'   => '',
 					'content' => ADTW()->renderHintImg('postlisting-duplicate-revision.jpg'),
@@ -55,6 +59,8 @@ defined( 'ABSPATH' ) || exit;
                     ) 
                 ),
                 'default'  => false,
+                'on' => esc_html__('On', 'mtt'),
+                'off' => esc_html__('Off', 'mtt'),
                 'hint'     => array(
 					'title'   => '',
 					'content' => ADTW()->renderHintImg('postlisting-category-count.jpg'),
@@ -73,6 +79,8 @@ defined( 'ABSPATH' ) || exit;
                 'title'    => esc_html__( 'EVERYWHERE: option to hide row actions', 'mtt' ),
                 'desc' => esc_html__( 'Available on Screen Options of each page', 'mtt' ),
                 'default'  => false,
+                'on' => esc_html__('On', 'mtt'),
+                'off' => esc_html__('Off', 'mtt'),
                 'hint'     => array(
 					'title'   => '',
                     'tip_position'  => [
@@ -101,13 +109,17 @@ defined( 'ABSPATH' ) || exit;
                         'https://wordpress.stackexchange.com/q/77532/12615' 
                     )
                 ),
-                'default'  => false
+                'default'  => false,
+                'on' => esc_html__('On', 'mtt'),
+                'off' => esc_html__('Off', 'mtt')
             ),
             array( # CPTs ID Columns
                 'id'       => 'listings_enable_id_column',
                 'type'     => 'switch',
                 'title'    => esc_html__( 'ALL TYPES: ID column', 'mtt' ),
                 'default'  => false,
+                'on' => esc_html__('On', 'mtt'),
+                'off' => esc_html__('Off', 'mtt')
             ),
 			array( # Title Column Width
 				'id'             => 'listings_title_column_width',
@@ -124,6 +136,8 @@ defined( 'ABSPATH' ) || exit;
                 'title'    => esc_html__( 'ALL TYPES: Thumbnail column', 'mtt' ),
                 'desc' => esc_html__( 'Shows the featured image or, if not set, the first attached.', 'mtt' ),
                 'default'  => false,
+                'on' => esc_html__('On', 'mtt'),
+                'off' => esc_html__('Off', 'mtt')
             ),
 			array( ## Thumbnail dimensions
                 'id'       => 'listings_enable_thumb_proportion',
@@ -151,6 +165,8 @@ defined( 'ABSPATH' ) || exit;
 				'title'    => esc_html__( 'Show total number of attachments', 'mtt' ),
                 'desc'     => esc_html__( 'If greater than 1.', 'mtt' ),
                 'default'  => false,
+                'on' => esc_html__('On', 'mtt'),
+                'off' => esc_html__('Off', 'mtt'),
                 'required' => array( 'listings_enable_thumb_column', '=', true ),
                 'hint'     => array(
 					'title'   => '',
@@ -167,42 +183,42 @@ defined( 'ABSPATH' ) || exit;
 			array( # Drafts color
 				'id'          => 'listings_status_draft',
 				'type'        => 'color',
-				'title'       => esc_html__('POSTS-PAGES Draft color', 'mtt'),
+				'title'       => esc_html__('Draft color', 'mtt'),
 				'transparent' => false,
 				'color_alpha' => false,
 			),
 			array( # Pendings color
 				'id'          => 'listings_status_pending',
 				'type'        => 'color',
-				'title'       => esc_html__('POSTS-PAGES Pending color', 'mtt'),
+				'title'       => esc_html__('Pending color', 'mtt'),
 				'transparent' => false,
 				'color_alpha' => false,
 			),
 			array( # Futures color
 				'id'          => 'listings_status_future',
 				'type'        => 'color',
-				'title'       => esc_html__('POSTS-PAGES Future color', 'mtt'),
+				'title'       => esc_html__('Future color', 'mtt'),
 				'transparent' => false,
 				'color_alpha' => false,
 			),
 			array( # Privates Color
 				'id'          => 'listings_status_private',
 				'type'        => 'color',
-				'title'       => esc_html__('POSTS-PAGES Private color', 'mtt'),
+				'title'       => esc_html__('Private color', 'mtt'),
 				'transparent' => false,
 				'color_alpha' => false,
 			),
 			array( # Passwordeds Color
 				'id'          => 'listings_status_password',
 				'type'        => 'color',
-				'title'       => esc_html__('POSTS-PAGES Password Protected color', 'mtt'),
+				'title'       => esc_html__('Password Protected color', 'mtt'),
 				'transparent' => false,
 				'color_alpha' => false,
 			),
 			array( # Others Color
 				'id'          => 'listings_status_others',
 				'type'        => 'color',
-				'title'       => esc_html__('POSTS-PAGES Other Author\'s color', 'mtt'),
+				'title'       => esc_html__("Other Author's color", 'mtt'),
 				'transparent' => false,
 				'color_alpha' => false,
 			),

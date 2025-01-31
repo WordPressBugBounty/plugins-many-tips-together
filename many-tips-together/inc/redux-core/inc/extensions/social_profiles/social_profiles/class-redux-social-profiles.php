@@ -21,24 +21,24 @@ if ( ! class_exists( 'Redux_Social_Profiles' ) ) {
 		/**
 		 * Field ID.
 		 *
-		 * @var mixed|string
+		 * @var null|string
 		 */
-		public $field_id = '';
+		public ?string $field_id;
 
 		/**
 		 * Panel opt_name.
 		 *
-		 * @var string
+		 * @var null|string
 		 */
-		public $opt_name = '';
+		public ?string $opt_name;
 
 		/**
 		 * Defaults array.
 		 *
-		 * @var array
+		 * @var null|array
 		 */
 
-		private $defaults = array();
+		private ?array $defaults = array();
 
 		/**
 		 * Set defaults.
@@ -67,6 +67,11 @@ if ( ! class_exists( 'Redux_Social_Profiles' ) ) {
 				$default_id = $arr['id'];
 
 				foreach ( $settings as $a ) {
+					if ( isset( $a['data'] ) ) {
+						$a['data'] = rawurldecode( $a['data'] );
+						$a         = (array) json_decode( $a['data'] );
+					}
+
 					if ( $default_id === $a['id'] ) {
 						$search_default    = false;
 						$fixed_arr[ $key ] = $a;

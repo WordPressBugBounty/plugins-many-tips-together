@@ -50,16 +50,19 @@ class HooksListings {
 		}
 
 		# CSS FOR CUSTOM COLUMNS
-		add_action( 
-            'admin_head-edit.php', 
-            [$this, 'printCSS'] 
-        );
+        foreach (['edit'] as $page ){
+            add_action( 
+                "admin_head-$page.php", 
+                [$this, 'printCSS'] 
+            );
+        }
 		
 		# ADD REMOVE ROW ACTIONS SCREEN OPTION
 		if( ADTW()->getop('listings_remove_row_actions_everywhere') ) {
 			add_action(
                 'init', 
-                [$this, 'initRowActions'] 
+                [$this, 'initRowActions'],
+                9999999
             );
             foreach (['edit.php', 'plugins.php', 'sites.php', 'users.php','upload.php'] as $screen) {
                 add_action(
@@ -104,6 +107,7 @@ class HooksListings {
 		global $typenow;
 		if( !in_array( $typenow, apply_filters( 'mtt_category_counts_cpts', array( 'post' ) ) ) )
 			return;
+            do_action('qm/debug',print_r(['opa'],true));
 		add_filter( 
             'wp_dropdown_cats', 
             [$this, 'categoryCountDo'] 
@@ -362,7 +366,7 @@ class HooksListings {
 	public function printCSS() {
 		$output = '';
 		if( ADTW()->getop('listings_enable_id_column') ) {
-			$output .= "\t" . '.column-id{width:3%} ' . "\r\n";
+			$output .= "\t" . '.column-id{width:5%} ' . "\r\n";
         }
 
 		if( ADTW()->getop('listings_enable_thumb_column') ) {
@@ -378,6 +382,7 @@ class HooksListings {
             }
         }
 
+        /** upload.php table css acts different than the rest, this width bugs it all */
 		if( ADTW()->getop('listings_title_column_width') ){
             if (ADTW()->getop('listings_title_column_width')['width'] != 0) {
                 $output .= sprintf(
@@ -439,7 +444,7 @@ class HooksListings {
         $cpt1 = get_post_types( $arg1 );
         $cpt2 = get_post_types( $arg2 );
         $cpt3 = get_post_types( $arg3 );
-        foreach (array_merge($cpt1, $cpt2, $cpt3) as $cpt){
+        foreach (array_merge($cpt1, $cpt2) as $cpt){
             add_filter(
                 "manage_edit-{$cpt}_columns", 
                 [$this, 'rowActionsCustomColumns'], 

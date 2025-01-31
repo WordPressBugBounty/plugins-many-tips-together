@@ -84,7 +84,7 @@ class HooksUsers {
 	public function printScripts() {
         $html = sprintf(
             '<div class="mysearch-wrapper">
-            <span class="dashicons dashicons-buddicons-forums b5f-icon" 
+            <span class="dashicons dashicons-image-filter b5f-icon" 
                 title="%1$s">
             </span> 
             <input type="text" id="b5f-plugins-filter" class="mysearch-box" 

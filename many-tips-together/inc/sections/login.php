@@ -13,7 +13,9 @@ $adtw_hide_languages = empty(get_available_languages())
         'id'       => 'loginpage_hide_languages',
         'type'     => 'switch',
         'title'    => esc_html__('Hide Languages dropdown', 'mtt'), 
-        'default'  => false
+        'default'  => false,
+        'on' => esc_html__('On', 'mtt'),
+        'off' => esc_html__('Off', 'mtt')
     );
 
 \Redux::set_section(
@@ -35,7 +37,9 @@ $adtw_hide_languages = empty(get_available_languages())
                 'type'     => 'switch',
                 'title'	=> esc_html__('Redirect login', 'mtt'),
                 'desc' 	=> esc_html__('The default behavior is being redirected to the Dashboard (index.php).', 'mtt'),
-                'default'  => false
+                'default'  => false,
+                'on' => esc_html__('On', 'mtt'),
+                'off' => esc_html__('Off', 'mtt')
             ),
             array( ## Login Redirect URL
                 'id'       => 'login_redirect_url',
@@ -49,7 +53,9 @@ $adtw_hide_languages = empty(get_available_languages())
                 'type'     => 'switch',
                 'title'	=> esc_html__('Redirect logout', 'mtt'),
                 'desc' 	=> esc_html__('The default behavior is being redirected to the login page...', 'mtt'),
-                'default'  => false
+                'default'  => false,
+                'on' => esc_html__('On', 'mtt'),
+                'off' => esc_html__('Off', 'mtt')
             ),
             array( ## Logout Redirect URL
                 'id'       => 'logout_redirect_url',
@@ -71,26 +77,34 @@ $adtw_hide_languages = empty(get_available_languages())
                 'type'     => 'switch',
                 'title' => sprintf( esc_html__('Hide link "Back to %s"', 'mtt'), get_bloginfo('name') ),
                 'desc'=> esc_html__('You can use the logo for that.', 'mtt'), 
-                'default'  => false
+                'default'  => false,
+                'on' => esc_html__('On', 'mtt'),
+                'off' => esc_html__('Off', 'mtt')
             ),
             array( # Hide Back to Site
                 'id'       => 'loginpage_backsite_hide',
                 'type'     => 'switch',
                 'title' => sprintf( esc_html__('Hide link "Back to %s"', 'mtt'), get_bloginfo('name') ),
                 'desc'=> esc_html__('You can use the logo for that.', 'mtt'), 
-                'default'  => false
+                'default'  => false,
+                'on' => esc_html__('On', 'mtt'),
+                'off' => esc_html__('Off', 'mtt')
             ),
             array( # Hide Name and PW
                 'id'       => 'loginpage_labels_hide',
                 'type'     => 'switch',
                 'title' => esc_html__('Hide name and password labels', 'mtt'),
-                'default'  => false
+                'default'  => false,
+                'on' => esc_html__('On', 'mtt'),
+                'off' => esc_html__('Off', 'mtt')
             ),
             array( # Hide Lost PW
                 'id'       => 'loginpage_pw_hide',
                 'type'     => 'switch',
                 'title' => esc_html__('Hide Lost Password link', 'mtt'),
-                'default'  => false
+                'default'  => false,
+                'on' => esc_html__('On', 'mtt'),
+                'off' => esc_html__('Off', 'mtt')
             ),
 
             array( ####### LOGO
@@ -157,7 +171,9 @@ $adtw_hide_languages = empty(get_available_languages())
                 'id'       => 'loginpage_form_border',
                 'type'     => 'switch',
                 'title' => esc_html__('Remove border', 'mtt'), 
-                'default'  => false
+                'default'  => false,
+                'on' => esc_html__('On', 'mtt'),
+                'off' => esc_html__('Off', 'mtt')
             ),
 			array( # BOX Color
 				'id'          => 'loginpage_form_bg_color',
@@ -243,7 +259,9 @@ $adtw_hide_languages = empty(get_available_languages())
                 'type'     => 'switch',
                 'title'=> esc_html__('Remove error message', 'mtt'), 
                 'desc'=> esc_html__('Don\'t reveal what\'s the mistake, user or password', 'mtt'), 
-                'default'  => false
+                'default'  => false,
+                'on' => esc_html__('On', 'mtt'),
+                'off' => esc_html__('Off', 'mtt')
             ),
             array( # Error Message text
                 'id'       => 'loginpage_errors_txt',
@@ -256,7 +274,9 @@ $adtw_hide_languages = empty(get_available_languages())
                 'id'       => 'loginpage_disable_shaking',
                 'type'     => 'switch',
                 'title' => esc_html__('Disable the login box shaking for the errors and other notices.', 'mtt'), 
-                'default'  => false
+                'default'  => false,
+                'on' => esc_html__('On', 'mtt'),
+                'off' => esc_html__('Off', 'mtt')
             ),
 
             array( ####### CSS
@@ -273,7 +293,9 @@ $adtw_hide_languages = empty(get_available_languages())
                     esc_html__( 'You can look for inspiration at ', 'mtt' )
                     . '<a href="https://codepen.io/search/pens?q=wordpress+login" target="_blank">CodePen.io</a>. '
                     . esc_html__( 'Paste your full CSS bellow.', 'mtt' ),
-                'default'  => false
+                'default'  => false,
+                'on' => esc_html__('On', 'mtt'),
+                'off' => esc_html__('Off', 'mtt')
             ),
 			array( # Extra CSS
 				'id'       => 'loginpage_extra_css',
@@ -284,7 +306,7 @@ $adtw_hide_languages = empty(get_available_languages())
                     '(<code>&lt;style&gt;</code>)'
                 ),
                 'mode'     => 'css',
-				'theme'    => 'monokai',
+				'theme'    => 'chrome',
                 'options'  => array(
                     'minLines' => 12, 
                     'maxLines' => 40,

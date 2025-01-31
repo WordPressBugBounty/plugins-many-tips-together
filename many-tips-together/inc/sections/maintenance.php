@@ -21,6 +21,8 @@ defined( 'ABSPATH' ) || exit;
                 'title' => esc_html__( 'Enable maintenance mode', 'mtt' ),
                 'desc'   => esc_html__( 'Block the site to visitors and the dashboard to non administrators.', 'mtt' ),
                 'default'  => false,
+                'on' => esc_html__('On', 'mtt'),
+                'off' => esc_html__('Off', 'mtt'),
                 'hint'     => array(
 					'title'   => '',
 					'content' => ADTW()->renderHintImg('maintenance.jpg'),
@@ -32,6 +34,8 @@ defined( 'ABSPATH' ) || exit;
                 'title'    => esc_html__( 'Only block backend access', 'mtt' ),
                 'desc'     => esc_html__( 'Frontend will be visible to everyone', 'mtt' ),
                 'default'  => false,
+                'on' => esc_html__('On', 'mtt'),
+                'off' => esc_html__('Off', 'mtt'),
                 'required' => array( 'maintenance_mode_enable', '=', true ),
             ),
 			array( # Minimum Role

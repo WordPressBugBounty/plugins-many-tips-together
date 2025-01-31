@@ -54,7 +54,8 @@ class HooksAdminBar {
         if( ADTW()->getop('adminbar_howdy_enable') ) {
             add_action( 
                 'admin_bar_menu', 
-                [$this, 'goodbyeHowdy'] 
+                [$this, 'goodbyeHowdy'],
+                9999
             );
         }    
 
@@ -142,6 +143,26 @@ class HooksAdminBar {
     }
 
     /**
+     * Aux for the howdy stuff
+     *
+     * @param string $input_string
+     * @return void
+     */
+    private function _add_comma_if_missing($input_string) {
+        // Remove any trailing whitespace
+        $trimmed = trim($input_string);
+        
+        // Check if the string ends with a comma
+        if (!preg_match('/,$/', $trimmed)) {
+            // If not ending with a comma, add one
+            return $trimmed . ',';
+        }
+        
+        // If it already ends with a comma, return as is
+        return $trimmed;
+    }
+    
+    /**
      * Remove or modify Howdy
      * 
      * @param type $wp_admin_bar
@@ -149,16 +170,22 @@ class HooksAdminBar {
      */
     public function goodbyeHowdy( $wp_admin_bar ) {
         $avatar = get_avatar( get_current_user_id(), 16 );
-        if( !$wp_admin_bar->get_node( 'my-account' ) )
+        if( !$wp_admin_bar->get_node( 'user-actions' ) )
             return;
-
+    
         $howdy = ADTW()->getop('adminbar_howdy_text') 
-                ?  ADTW()->getop('adminbar_howdy_text')
+                ?  $this->_add_comma_if_missing(ADTW()->getop('adminbar_howdy_text'))
                 : '';
-        $wp_admin_bar->add_node( array(
-                'id'    => 'my-account',
-                'title' => $howdy . ' ' . wp_get_current_user()->display_name . $avatar,
-        ) );
+        $original = 'Howdy,';
+        if ( !empty(ADTW()->getop('adminbar_howdy_original_text')) && ADTW()->is_translation() ) {
+            $original = $this->_add_comma_if_missing( ADTW()->getop('adminbar_howdy_original_text') );
+        }
+        
+        $my_account = $wp_admin_bar->get_node('my-account');
+        if ( $my_account ) {
+            $my_account->title = str_replace( $original, $howdy, $my_account->title );
+            $wp_admin_bar->add_node( $my_account );
+        }
     }
 
 

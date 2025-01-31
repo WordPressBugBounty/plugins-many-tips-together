@@ -76,6 +76,10 @@ $args_adtw = array(
 			),
 		),
 	),
+    'save_changes' => esc_html__('Save Changes', 'mtt'),
+    'reset_section' => esc_html__('Reset Section', 'mtt'),
+    'reset_all' => esc_html__('Reset All', 'mtt')
+
 	// FUTURE -> Not in use yet, but reserved or partially implemented. Use at your own risk.
 	// possible: options, theme_mods, theme_mods_expanded, transient. Not fully functional, warning!
     //'network_admin'     => true,
@@ -127,3 +131,5 @@ $adtw_sections = [
 foreach ($adtw_sections as $sec) {
     require_once ADTW_PATH . "/inc/sections/$sec.php";
 }
+
+

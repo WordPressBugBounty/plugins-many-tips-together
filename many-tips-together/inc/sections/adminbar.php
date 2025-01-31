@@ -29,9 +29,11 @@ defined( 'ABSPATH' ) || exit;
             array( # enable
                 'id'       => 'adminbar_sitename_enable',
                 'type'     => 'switch',
-                'title'    => esc_html__('Add Site Name with Icon', 'mtt'),
-                'desc' => esc_html__('Add a custom link with title and icon', 'mtt'),
-                'default'  => false
+                'title'    => __('Add Site Name with Icon', 'mtt'),
+                'desc' => __('Add a custom link with title and icon', 'mtt'),
+                'default'  => false,
+                'on' => esc_html__('On', 'mtt'),
+                'off' => esc_html__('Off', 'mtt')
             ),
             array( ## title
                 'id'       => 'adminbar_sitename_title',
@@ -52,7 +54,7 @@ defined( 'ABSPATH' ) || exit;
 				'type'     => 'text',
 				'title'    => esc_html__( 'URL', 'mtt' ),
 				'validate' => 'url',
-				'placeholder'  => 'full URL with http://, leave empty for default (swap back and frontend)',
+				'placeholder'  => esc_html__( 'full URL with http://, leave empty for default (swap back and frontend)', 'mtt' ),
                 'required' => array( 'adminbar_sitename_enable', '=', true ),
 			),
             # ENABLE ADTW MENU
@@ -61,13 +63,17 @@ defined( 'ABSPATH' ) || exit;
                 'type'     => 'switch',
                 'title'    => esc_html__('Add Admin Tweaks shortcut', 'mtt'),
                 'desc' => esc_html__('Useful when configuring this plugin', 'mtt'),
-                'default'  => false
+                'default'  => false,
+                'on' => esc_html__('On', 'mtt'),
+                'off' => esc_html__('Off', 'mtt')
             ),
             array( # howdy
                 'id'       => 'adminbar_howdy_enable',
                 'type'     => 'switch',
                 'title'    => esc_html__('Remove or change "Howdy"', 'mtt'),
-                'default'  => false
+                'default'  => false,
+                'on' => esc_html__('On', 'mtt'),
+                'off' => esc_html__('Off', 'mtt')
             ),
             array( ## howdy text
                 'id'       => 'adminbar_howdy_text',
@@ -76,12 +82,25 @@ defined( 'ABSPATH' ) || exit;
                 'desc' => esc_html__('Leave empty for complete removal', 'mtt'),
                 'required' => array( 'adminbar_howdy_enable', '=', true ),
             ),
+            array( ## howdy text
+                'id'       => 'adminbar_howdy_original_text',
+                'type'     => 'text',
+                'title'    => esc_html__( 'Howdy in your language', 'mtt' ),
+                'desc' => esc_html__('Leave empty if WP is in English', 'mtt'),
+                'class' => 'howdy-translated',
+                'required' => [
+                    ['adminbar_howdy_enable', '=', true]
+                ],
+            ),
             # ENABLE CUSTOM MENU
             array( # custom menu
                 'id'       => 'adminbar_custom_enable',
                 'type'     => 'switch',
                 'title'    => esc_html__( 'Enable Custom Menu', 'mtt' ),
-                'default'  => false
+                'desc'     => esc_html__('Save options to configure the menu', 'mtt'),
+                'default'  => false,
+                'on' => esc_html__('On', 'mtt'),
+                'off' => esc_html__('Off', 'mtt')
             ),
 			array( ## repeater
                 'id'          => 'adminbar_custom_items',
@@ -118,13 +137,17 @@ defined( 'ABSPATH' ) || exit;
                     '<br />',
                     '<a href="https://wordpress.stackexchange.com/a/77648/12615">WordPress Answers</a>'
                 ),
-				'default'  => false
+				'default'  => false,
+                'on' => esc_html__('On', 'mtt'),
+                'off' => esc_html__('Off', 'mtt')
 			),
 			array( # disable adminbar frontend
 				'id'       => 'adminbar_disable',
 				'type'     => 'switch',
 				'title'    => esc_html__('Disable Admin Bar for all users in Frontend', 'mtt'),
-				'default'  => false
+				'default'  => false,
+                'on' => esc_html__('On', 'mtt'),
+                'off' => esc_html__('Off', 'mtt')
 			),
         ]
 	)

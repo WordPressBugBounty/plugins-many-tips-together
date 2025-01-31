@@ -16,14 +16,6 @@ class HooksPluginsExtras {
 	 */
 	public function __construct() 
     {
-        # SNIPPETS: FILTER BY 
-		if( ADTW()->getop('plugins_snippets_filter') ) {
-            add_action( 
-                'admin_print_footer_scripts-toplevel_page_snippets', 
-                [$this, 'printSnippetsScripts']
-            );
-        }
-
         # NOTIFICATION CENTER: RENAME ADMINBAR 
 		if( ADTW()->getop('plugins_notices_rename') ) 
         {
@@ -63,6 +55,14 @@ class HooksPluginsExtras {
             }
         }
 
+        # SNIPPETS: FILTER BY 
+		if( ADTW()->getop('plugins_snippets_filter') ) {
+            add_action( 
+                'admin_print_footer_scripts-toplevel_page_snippets', 
+                [$this, 'printSnippetsScripts']
+            );
+        }
+
         # SNIPPETS: MOVE MENU 
 		if( ADTW()->getop('plugins_snippets_move_menu') 
             && !is_network_admin() ) 
@@ -70,6 +70,11 @@ class HooksPluginsExtras {
             add_action( 
                 'admin_menu', 
                 [$this, 'menuSnip'],
+                99998
+            );
+            add_action( 
+                'admin_head', 
+                [$this, 'headMenuSnip'],
                 99998
             );
             # Adiciona botões no topo
@@ -115,6 +120,10 @@ class HooksPluginsExtras {
             add_action(
                 'admin_head-toplevel_page_theseoframework-settings', 
                 [$this, 'headSEO']
+            );
+            add_action(
+                'admin_head', 
+                [$this, 'headMenuSEO']
             );
         }
 
@@ -165,7 +174,7 @@ class HooksPluginsExtras {
     {
         return sprintf(
             '<div class="mysearch-wrapper">
-            <span class="dashicons dashicons-buddicons-forums b5f-icon" 
+            <span class="dashicons dashicons-image-filter b5f-icon" 
                 title="%1$s">
             </span> 
             <button id="hide-desc" class="button b5f-button" 
@@ -305,7 +314,35 @@ class HooksPluginsExtras {
     }
 
     /**
-     * Adjust CSS for SEO submenu
+     * Adjust CSS for SEO submenu for all admin
+     *
+     * @return void
+     */
+    public function headMenuSEO() {
+		?>
+        <style>
+            #adminmenu a[href="admin.php?page=theseoframework-settings"] {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                width: 83%;
+                padding-right: 10px;
+            }
+
+            #adminmenu a[href="admin.php?page=theseoframework-settings"]::after {
+                /* https://developer.wordpress.org/resource/dashicons */
+                content: "\f183"; 
+                font-family: dashicons;
+                font-size: 20px;
+                margin-left: 10px;
+            }
+
+        </style>
+        <?php
+    }
+
+    /**
+     * Adjust CSS for SEO submenu when opened
      *
      * @return void
      */
@@ -347,6 +384,34 @@ class HooksPluginsExtras {
         );
     }
     
+    /**
+     * Adjust CSS for SEO submenu for all admin
+     *
+     * @return void
+     */
+    public function headMenuSnip() {
+		?>
+        <style>
+            #adminmenu a[href="admin.php?page=snippets"] {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                width: 83%;
+                padding-right: 10px;
+            }
+
+            #adminmenu a[href="admin.php?page=snippets"]::after {
+                /* https://developer.wordpress.org/resource/dashicons */
+                content: "\f13f"; 
+                font-family: dashicons;
+                font-size: 20px;
+                margin-left: 10px;
+            }
+
+        </style>
+        <?php
+    }
+
     public function snippetsScreenButtons (){
         $make_menu = [
             'sp-todos'  => [
@@ -363,16 +428,13 @@ class HooksPluginsExtras {
             printf( '<a href="%s" class="page-title-action add-new-h2">%s</a>', $v[1], $v[0] );
         }
         echo '</div>';
-        echo <<<HTML
-        <style>
-
-        </style>
+        ?>
         <script type="text/javascript">
         jQuery(document).ready(function($) {   
             $('#the-menu-b5f a').appendTo('.wrap h1');
         });             
         </script>
-HTML;
+        <?php
     }
     
     public function cleanUp(){

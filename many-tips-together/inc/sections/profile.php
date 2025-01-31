@@ -29,12 +29,16 @@ defined( 'ABSPATH' ) || exit;
                 'type'     => 'switch',
                 'title' => esc_html__( 'Filter users by keyword', 'mtt' ),
                 'default'  => false,
+                'on' => esc_html__('On', 'mtt'),
+                'off' => esc_html__('Off', 'mtt'),
             ),
             array( # Filter Users
                 'id'       => 'users_id_column',
                 'type'     => 'switch',
                 'title' => esc_html__( 'Add ID column', 'mtt' ),
                 'default'  => false,
+                'on' => esc_html__('On', 'mtt'),
+                'off' => esc_html__('Off', 'mtt'),
             ),
             
             array( ####### PROFILE
@@ -49,6 +53,8 @@ defined( 'ABSPATH' ) || exit;
                 'title' => esc_html__( 'Hide Titles', 'mtt' ),
                 'desc' => esc_html__( 'Hides the titles: "Personal Options", "Name", "Contact Info" and "About Yourself"', 'mtt' ),
                 'default'  => false,
+                'on' => esc_html__('On', 'mtt'),
+                'off' => esc_html__('Off', 'mtt'),
             ),
             array( # PERSONAL OPTIONS
 				'id'       => 'profile_personal_options',
@@ -113,6 +119,8 @@ defined( 'ABSPATH' ) || exit;
                 'type'     => 'switch',
                 'title' => esc_html__( 'Hide Application Password', 'mtt' ),
                 'default'  => false,
+                'on' => esc_html__('On', 'mtt'),
+                'off' => esc_html__('Off', 'mtt'),
             ),
 			array( # CSS
 				'id'       => 'profile_css',

@@ -1,10 +1,9 @@
 === Admin Tweaks ===
 Contributors: brasofilo
-Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=JNJXKWBYM9JP6&lc=ES&item_name=Admin%20Tweaks%20%3a%20Rodolfo%20Buaiz&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted
-Tags: admin, admin interface, tuning, profile, posts, pages, login, maintenance mode, snippets, clients
+Tags: customize, admin interface, profile, login, maintenance mode
 Requires at least: 5.0
-Tested up to: 6.5.2
-Stable tag: 3.2
+Tested up to: 6.7.1
+Stable tag: 3.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -63,6 +62,10 @@ Don't hesitate in posting a new topic here in [WordPress support forum](https://
 7. Plugins page with different color for Inactive and custom color for selected authors. Simpler description and Last Updated information.
 
 == Changelog ==
+
+**Version 3.3**
+
+* Added option to not create attachment pages automatically
 
 **Version 3.2.1**
 

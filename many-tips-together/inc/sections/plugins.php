@@ -23,6 +23,8 @@ if (!is_multisite()) {
             )
         ),
         'default'  => false,
+        'on' => esc_html__('On', 'mtt'),
+        'off' => esc_html__('Off', 'mtt'),
     ];
 }
 
@@ -46,6 +48,9 @@ if (class_exists('WANC\Init')) :
         'type'             => 'switch',
         'title'            => esc_html__('NOTIFICATION CENTER', 'mtt'),
         'subtitle'         => esc_html__('move to the Tools menu', 'mtt'),
+        //'default'  => false, // tava sem nao sei porque
+        'on' => esc_html__('On', 'mtt'),
+        'off' => esc_html__('Off', 'mtt'),
     ];
     $notices_rename_enable = [
         'id'       => 'plugins_notices_rename',
@@ -53,6 +58,8 @@ if (class_exists('WANC\Init')) :
         'title'    => esc_html__('NOTIFICATION CENTER', 'mtt'),
         'subtitle' => esc_html__('Rename "Notifications" on the admin bar', 'mtt'),
         'default'  => false,
+        'on' => esc_html__('On', 'mtt'),
+        'off' => esc_html__('Off', 'mtt'),
     ];
     $notices_rename_text = [
         'id'       => 'plugins_notices_rename_text',
@@ -64,16 +71,18 @@ if (class_exists('WANC\Init')) :
 
 endif;
 
-if (class_exists('ACF')) :
+/*if (class_exists('ACF')) :
     $third_party_plugins = true;
     $acf_move = [
         'id'               => 'plugins_acf_move_menu',
         'type'             => 'switch',
         'title'            => esc_html__('ADVANCED CUSTOM FIELDS', 'mtt'),
         'subtitle'         => esc_html__('move to the Tools menu', 'mtt'),
+        'on' => esc_html__('On', 'mtt'),
+        'off' => esc_html__('Off', 'mtt'),
     ];
 
-endif;
+endif;*/
 
 if (defined('THE_SEO_FRAMEWORK_VERSION')) :
     $third_party_plugins = true;
@@ -82,6 +91,8 @@ if (defined('THE_SEO_FRAMEWORK_VERSION')) :
         'type'             => 'switch',
         'title'            => esc_html__('THE SEO FRAMEWORK', 'mtt'),
         'subtitle'         => esc_html__('move to the Themes menu', 'mtt'),
+        'on' => esc_html__('On', 'mtt'),
+        'off' => esc_html__('Off', 'mtt'),
     ];
 endif;
 
@@ -96,12 +107,16 @@ if (defined('CODE_SNIPPETS_FILE')) :
             'title'   => '',
             'content' => ADTW()->renderHintImg('general-filter-snippets.jpg'),
         ),
+        'on' => esc_html__('On', 'mtt'),
+        'off' => esc_html__('Off', 'mtt'),
     ];
     $snippets_move = [
         'id'               => 'plugins_snippets_move_menu',
         'type'             => 'switch',
         'title'            => esc_html__('CODE SNIPPETS', 'mtt'),
         'subtitle'         => esc_html__('move to the Tools menu', 'mtt'),
+        'on' => esc_html__('On', 'mtt'),
+        'off' => esc_html__('Off', 'mtt'),
     ];
 endif;
 
@@ -129,6 +144,8 @@ endif;
                 'title' => esc_html__('Live filter by active/inactive', 'mtt'),
                 'desc' => esc_html__('also by fragments of name/description/author', 'mtt'),
                 'default'  => false,
+                'on' => esc_html__('On', 'mtt'),
+                'off' => esc_html__('Off', 'mtt'),
                 'hint'     => array(
                     'title'   => '',
                     'content' => "<br>" . ADTW()->renderHintImg('plugins-filtering.png'),
@@ -140,6 +157,8 @@ endif;
                 'type'     => 'switch',
                 'title' => esc_html__('Block plugins upgrade check', 'mtt'),
                 'default'  => false,
+                'on' => esc_html__('On', 'mtt'),
+                'off' => esc_html__('Off', 'mtt'),
             ),
             // MS: don't show
             array( # Block Upgrade check for inactive
@@ -147,18 +166,25 @@ endif;
                 'type'     => 'switch',
                 'title' => esc_html__('Block inactive plugins upgrade check', 'mtt'),
                 'default'  => false,
+                'on' => esc_html__('On', 'mtt'),
+                'off' => esc_html__('Off', 'mtt'),
             ),
             array( # Block email notifications for auto-updates
                 'id'       => 'plugins_block_emails_updates',
                 'type'     => 'switch',
                 'title' => esc_html__('Disable auto-update email notifications', 'mtt'),
+                'desc'  => esc_html__('Whether to send an email following an automatic background plugin update', 'mtt'),
                 'default'  => false,
+                'on' => esc_html__('On', 'mtt'),
+                'off' => esc_html__('Off', 'mtt'),
             ),
             /*array( # Remove Extra notices
                 'id'       => 'plugins_remove_plugin_notice',
                 'type'     => 'switch',
                 'title'    => esc_html__( 'Remove extra plugins notices (normally in yellow)', 'mtt' ),
                 'default'  => false,
+                'on' => esc_html__('On', 'mtt'),
+                'off' => esc_html__('Off', 'mtt'),
             ),*/
             $last_update_field,
             array( # Inactive Plugins BG color
@@ -174,6 +200,8 @@ endif;
                 'title'    => esc_html__('Colorize specific plugins.', 'mtt'),
                 'desc'     => esc_html__('Use to display some plugins (yours!) with other color.', 'mtt'),
                 'default'  => false,
+                'on' => esc_html__('On', 'mtt'),
+                'off' => esc_html__('Off', 'mtt'),
             ),
             array( ## Names
                 'id'       => 'plugins_my_plugins_names',
@@ -192,8 +220,10 @@ endif;
             array( ## Show Count
                 'id'       => 'plugins_my_plugins_count',
                 'type'     => 'switch',
-                'title'    => esc_html__('Display count', 'mtt'),
+                'title'    => esc_html__('Show how many plugins', 'mtt'),
                 'default'  => false,
+                'on' => esc_html__('On', 'mtt'),
+                'off' => esc_html__('Off', 'mtt'),
                 'required' => array('plugins_my_plugins_bg_color', '=', true),
             ),
 

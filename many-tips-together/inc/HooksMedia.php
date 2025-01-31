@@ -55,7 +55,20 @@ class HooksMedia {
 			add_post_type_support( 'attachment', 'custom-fields' );
 		}
         
-		# SANITIZE FILENAME
+		# DISABLE ATTACHMENT PAGES
+		add_action(
+            'admin_init',
+            function() {
+                $to = (int) ( !! get_option( 'wp_attachment_pages_enabled' ) );;
+                if( ADTW()->getop('attachment_pages_enabled') && !$to )  {
+                    update_option( 'wp_attachment_pages_enabled', 1 );
+                } else if( !ADTW()->getop('attachment_pages_enabled') && $to )  {
+                    update_option( 'wp_attachment_pages_enabled', 0 );
+                }
+            }
+        );
+
+        # SANITIZE FILENAME
 		if( ADTW()->getop('media_sanitize_filename') )
 			add_filter(
                 'sanitize_file_name', 

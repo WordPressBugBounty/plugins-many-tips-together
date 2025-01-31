@@ -5,9 +5,7 @@ form.search-form.search-plugins {
     /*display: none; */
 }
 .dashicons.b5f-icon {
-    transform:scale(1.5);
     line-height:1.3em;
-    margin:0 5px;
     color:#0071a1;
 }
 .mysearch-box,.close-icon,.mysearch-wrapper {

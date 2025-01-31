@@ -18,9 +18,11 @@ class HooksAdminMenu {
 
         # RE-ADD CUSTOMIZE.PHP
 		if( ADTW()->getop('admin_menus_readd_customize') ) {
-			add_action( 'admin_menu', function () {
-				add_theme_page( __('Customize'), __('Customize'), 'edit_pages', 'customize.php');
-			});
+            add_action( 'admin_menu', function () {
+                    if ( !ADTW()->customize_menu_exists() ) {
+                        add_theme_page( __('Customize'), __('Customize'), 'edit_pages', 'customize.php');
+                    }
+                }, 999999999);
         }
 
         # ENABLE LINK MANAGER

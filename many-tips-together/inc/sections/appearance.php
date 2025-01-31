@@ -30,14 +30,18 @@ defined( 'ABSPATH' ) || exit;
 				'title'    => esc_html__('Hide Help tabs', 'mtt'),
 				#'desc' => esc_html__( 'No validation can be done on this field type', 'your-textdomain-here' ),
 				'desc'     => esc_html__('Located at top right of the screen.','mtt'),
-				'default'  => false
+				'default'  => false,
+                'on' => esc_html__('On', 'mtt'),
+                'off' => esc_html__('Off', 'mtt')
 			),
 			array( # Hide Screen Options tab
 				'id'       => 'appearance_hide_screen_options_tab',
 				'type'     => 'switch',
 				'title'    => esc_html__('Hide Screen Options tabs', 'mtt'),
 				'desc'     => esc_html__('Located at top right of the screen.','mtt'),
-				'default'  => false
+				'default'  => false,
+                'on' => esc_html__('On', 'mtt'),
+                'off' => esc_html__('Off', 'mtt')
 			),
 			array( # Hide Help texts
 				'id'       => 'appearance_help_texts_enable',
@@ -47,7 +51,9 @@ defined( 'ABSPATH' ) || exit;
                     esc_html__( 'No explanations about custom fields, categories description, etc. CSS file copied from %s, by Scott Reilly. There this is set in a user basis, here in a role basis.', 'mtt' ),
                     '<a href="https://wordpress.org/extend/plugins/admin-expert-mode/" target="_blank">Admin Expert Mode</a>'
                 ),
-				'default'  => false
+				'default'  => false,
+                'on' => esc_html__('On', 'mtt'),
+                'off' => esc_html__('Off', 'mtt')
 			),
 			array( ## Hide Help roles
 				'id'       => 'appearance_help_texts_roles',
@@ -73,7 +79,9 @@ defined( 'ABSPATH' ) || exit;
                     esc_html__( 'Useful for displaying a notice for clients, like:', 'mtt' ),
                     esc_html__( 'Change this settings at your own risk...', 'mtt' ),
                 ),
-				'default'  => false
+				'default'  => false,
+                'on' => esc_html__('On', 'mtt'),
+                'off' => esc_html__('Off', 'mtt')
 			),
 			array( ## Settings Notices text
 				'id'       => 'admin_notice_header_settings_text',
@@ -86,7 +94,9 @@ defined( 'ABSPATH' ) || exit;
 				'type'     => 'switch',
 				'title'    => esc_html__( 'Header: notice in all admin pages', 'mtt' ),
 				'desc' => esc_html__( 'Useful for displaying a message to all users of the site.', 'mtt' ),
-				'default'  => false
+				'default'  => false,
+                'on' => esc_html__('On', 'mtt'),
+                'off' => esc_html__('Off', 'mtt')
 			),
 			array( ## All Pages texts
 				'id'       => 'admin_notice_header_allpages_text',
@@ -106,7 +116,9 @@ defined( 'ABSPATH' ) || exit;
 				'id'       => 'admin_notice_footer_hide',
 				'type'     => 'switch',
 				'title'    => esc_html__( 'Footer: hide', 'mtt' ),
-				'default'  => false
+				'default'  => false,
+                'on' => esc_html__('On', 'mtt'),
+                'off' => esc_html__('Off', 'mtt')
 			),
 			array( # Footer Message enable
 				'id'       => 'admin_notice_footer_message_enable',
@@ -114,6 +126,8 @@ defined( 'ABSPATH' ) || exit;
 				'title'    => esc_html__( 'Footer: show only your message', 'mtt' ),
                 'desc' => esc_html__( 'Remove all WordPress and other plugins messages, so your message is the only one there...', 'mtt' ),
 				'default'  => false,
+                'on' => esc_html__('On', 'mtt'),
+                'off' => esc_html__('Off', 'mtt'),
 				'required' => array( 'admin_notice_footer_hide', '=', false ),
 			),
 			array( ## Footer Message left

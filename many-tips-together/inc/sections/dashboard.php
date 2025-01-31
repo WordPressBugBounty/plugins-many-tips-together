@@ -79,7 +79,9 @@ if (!is_multisite()) {
                 'id'       => 'dashboard_add_widgets',
                 'type'     => 'switch',
                 'title'    => esc_html__( 'Enable to create your widgets', 'mtt' ),
-                'default'  => false
+                'default'  => false,
+                'on' => esc_html__('On', 'mtt'),
+                'off' => esc_html__('Off', 'mtt')
             ),
             array(
                 'id'          => 'dashboard_custom_widgets',
@@ -104,7 +106,7 @@ if (!is_multisite()) {
 					),
 					array(
 						'id'          => 'dashboard_custom_widgets_content',
-						'type'        => 'text',
+						'type'        => 'textarea',
 						'placeholder' => esc_html__( 'Content', 'mtt' ),
 					),
                     array(
@@ -119,7 +121,9 @@ if (!is_multisite()) {
                         'id'       => 'dashboard_custom_widgets_enable',
                         'type'     => 'switch',
                         'title'    => esc_html__( 'Enable this widget', 'mtt' ),
-                        'default'  => false
+                        'default'  => false,
+                        'on' => esc_html__('On', 'mtt'),
+                        'off' => esc_html__('Off', 'mtt')
                     ),
         
                 ),

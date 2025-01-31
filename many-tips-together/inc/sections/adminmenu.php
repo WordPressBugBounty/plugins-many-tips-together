@@ -46,6 +46,8 @@ defined( 'ABSPATH' ) || exit;
 				'title' => esc_html__( 'Re-add the Customize submenu', 'mtt' ),
                 'desc'  => esc_html__( "Some themes remove it and don't have some of its options", 'mtt'),
 				'default'  => false,
+                'on' => esc_html__('On', 'mtt'),
+                'off' => esc_html__('Off', 'mtt')
 			),
 			array( # Rename Posts
 				'id'    => 'posts_rename_enable',
@@ -56,6 +58,8 @@ defined( 'ABSPATH' ) || exit;
                         . esc_html__('Tip via:', 'mtt' )
                         . '<a href="https://wordpress.stackexchange.com/a/9224/12615" target="_blank">WordPress Answers</a>',
 				'default'  => false,
+                'on' => esc_html__('On', 'mtt'),
+                'off' => esc_html__('Off', 'mtt')
 			),
             array( ## Rename posts to  
 				'id'          => 'posts_rename_name',
@@ -88,6 +92,8 @@ defined( 'ABSPATH' ) || exit;
 					'title'   => '',
 					'content' => ADTW()->renderHintImg('adminmenus-bubbles.jpg', 'mini'),
 				),
+                'on' => esc_html__('On', 'mtt'),
+                'off' => esc_html__('Off', 'mtt')
 			),
             array( ## Bubbles cpts 
                 'id'       => 'admin_menus_bubbles_cpts',
@@ -118,13 +124,17 @@ defined( 'ABSPATH' ) || exit;
 					'title'   => '',
 					'content' => ADTW()->renderHintImg('adminmenus-sorting.jpg', 'small'),
 				),
+                'on' => esc_html__('On', 'mtt'),
+                'off' => esc_html__('Off', 'mtt')
 			),
 			array( # Sort Settings by Plugins
 				'id'       => 'admin_menus_sort_plugins',
 				'type'     => 'switch',
 				'title'    => esc_html__( 'Sort Settings by Plugins', 'mtt' ),
 				'desc'    => esc_html__( 'Plugins submenu items and WordPress submenu items are shown separated, see screenshot above', 'mtt' ),
-				'default'  => false
+				'default'  => false,
+                'on' => esc_html__('On', 'mtt'),
+                'off' => esc_html__('Off', 'mtt')
 			),
         ]
 	)

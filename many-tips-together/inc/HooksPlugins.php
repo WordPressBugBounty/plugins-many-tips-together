@@ -22,10 +22,13 @@ class HooksPlugins {
                 'pre_site_transient_update_plugins', 
                 '__return_null'
 			);
-            add_filter( 
-                'views_plugins', 
-                [$this, 'warn_update_nag_deactivated']
-            );
+            add_action( 'load-plugins.php', function(){
+                add_action( 
+                    'pre_current_active_plugins', 
+                    [$this, 'warn_update_nag_deactivated'],
+                    999 
+                );
+            });
         }
 
 		# DISABLE INACTIVE PLUGIN UPDATE NOTICES
@@ -34,10 +37,13 @@ class HooksPlugins {
                 'site_transient_update_plugins', 
                 [$this, 'remove_update_nag_for_deactivated']
 			);
-            add_filter( 
-                'views_plugins', 
-                [$this, 'warn_update_nag_deactivated']
-            );
+            add_action( 'load-plugins.php', function(){
+                add_action( 
+                    'pre_current_active_plugins', 
+                    [$this, 'warn_update_nag_deactivated'],
+                    999
+                );
+            });
         }
         
 		# DISABLE EMAIL AUTO-UPDATE NOTICES
@@ -103,7 +109,7 @@ class HooksPlugins {
     {
         return sprintf(
             '<div class="mysearch-wrapper">
-            <span class="dashicons dashicons-buddicons-forums b5f-icon" 
+            <span class="dashicons dashicons-image-filter b5f-icon" 
                 title="%1$s">
             </span> 
             <button id="hide-desc" class="button b5f-button" 
@@ -140,14 +146,20 @@ class HooksPlugins {
         );
     }
 
-    public function warn_update_nag_deactivated( $views ){
-        $base = 'UPDATES NOT SHOWING (by Admin Tweaks)';
-        $msg = 'some ' . $base;
-        if ( ADTW()->getop('plugins_block_update_notice') ) {
-            $msg = $base;
+    public function warn_update_nag_deactivated(){
+        $setts = sprintf(
+            '<a href="%s">(%s)</a>',
+            admin_url('admin.php?page=admintweaks&tab=8'),
+            __('settings','mtt')
+        );
+        if( ADTW()->getop('plugins_block_update_inactive_plugins') ) {
+            # deactivated only
+            $base = __('UPDATES NOT SHOWING for disabled plugins', 'mtt');
+        } else if ( ADTW()->getop('plugins_block_update_notice') ) {
+            # all plugins
+            $base = __('UPDATES NOT SHOWING for all plugins', 'mtt');
         }
-        $views['adtw-nag-inactive'] = "<b><small>$msg</small></b>";
-        return $views;
+        echo "<div class='notice notice-warning inline  is-dismissible'><p>$base $setts</p></div>";
     }
 
 	/**
@@ -202,7 +214,7 @@ class HooksPlugins {
 		}
 
 		if( $last_updated )
-			$plugin_meta['last_updated'] = esc_html__( 'Last Updated', 'mtt' )
+			$plugin_meta['last_updated'] = '<br>' . esc_html__( 'Last Updated', 'mtt' )
 					. esc_html( ': ' . $last_updated );
 
 		return $plugin_meta;

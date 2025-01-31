@@ -193,3 +193,18 @@ ul.credits-thanks li:nth-child(even)
     margin-top:-5px !important;
     color:#aaa
 }
+
+.redux-container .form-table>tbody>tr>th {
+    width: 40%;
+}
+
+
+fieldset.redux-field.redux-field-container.redux-container-switch {
+    padding: 10px 0 40px !important;
+    display: flex;
+}
+
+.description.field-desc {
+    width: 64%;
+    margin: 0;
+}

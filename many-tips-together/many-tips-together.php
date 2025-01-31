@@ -1,9 +1,13 @@
 <?php
 /**
+ * TODO: ADD OPTION TO wp_attachment_pages_enabled
+ * update_option( 'wp_attachment_pages_enabled', (bool) $to );
+ */
+/**
  * Plugin Name: Admin Tweaks
  * Plugin URI: https://wordpress.org/plugins/many-tips-together
  * Description: Tweak, style, remove and modify several aspects of your WordPress administrative interface.
- * Version: 3.2.1
+ * Version: 3.3
  * Author: Rodolfo Buaiz
  * Author URI: https://brasofilo.com/
  * Text Domain: mtt
@@ -31,6 +35,7 @@ defined( 'ABSPATH' ) || exit;
 
 define( 'ADTW_FILE', __FILE__ );
 define( 'ADTW_BASE', plugin_basename( __FILE__ ) );
+define( 'ADTW_SLUG', dirname( plugin_basename( __FILE__ ) ) );
 define( 'ADTW_PATH', untrailingslashit( plugin_dir_path( ADTW_FILE ) ) );
 define( 'ADTW_URL', untrailingslashit( plugins_url( '/', ADTW_FILE ) ) );
 
@@ -49,7 +54,9 @@ if (class_exists('ADTW\AdminTweaks')) {
     function ADTW() {
         return ADTW\AdminTweaks::getInstance();
     }
-    add_action( 'plugins_loaded', [ADTW(), 'init'], 99999);
+    add_action( 'plugins_loaded', [ADTW(), 'loaded'], 9999);
+    add_action('init', [ADTW(), 'load_textdomain'], 10, 1);
     register_activation_hook(ADTW_FILE, [ADTW(), 'activate']);
     register_deactivation_hook(ADTW_FILE, [ADTW(), 'deactivate']);
 }
+
