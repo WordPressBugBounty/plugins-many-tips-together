@@ -1,9 +1,5 @@
 <?php
 /**
- * TODO: ADD OPTION TO wp_attachment_pages_enabled
- * update_option( 'wp_attachment_pages_enabled', (bool) $to );
- */
-/**
  * Plugin Name: Admin Tweaks
  * Plugin URI: https://wordpress.org/plugins/many-tips-together
  * Description: Tweak, style, remove and modify several aspects of your WordPress administrative interface.

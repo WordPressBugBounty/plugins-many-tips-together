@@ -107,7 +107,6 @@ class HooksListings {
 		global $typenow;
 		if( !in_array( $typenow, apply_filters( 'mtt_category_counts_cpts', array( 'post' ) ) ) )
 			return;
-            do_action('qm/debug',print_r(['opa'],true));
 		add_filter( 
             'wp_dropdown_cats', 
             [$this, 'categoryCountDo'] 
