@@ -16,8 +16,8 @@ class HooksLogin {
      */
     public function __construct() {
         # REDIRECT LOGIN
-        if ( ADTW()->getop('login_redirect_enable')
-            && ADTW()->getop('login_redirect_url') )
+        if ( ADTW()->getOption('login_redirect_enable')
+            && ADTW()->getOption('login_redirect_url') )
         {
             add_filter( 
                 'login_redirect', 
@@ -26,8 +26,8 @@ class HooksLogin {
             );
         }
         # REDIRECT LOGOUT
-        if ( ADTW()->getop('logout_redirect_enable')
-            && ADTW()->getop('logout_redirect_url') )
+        if ( ADTW()->getOption('logout_redirect_enable')
+            && ADTW()->getOption('logout_redirect_url') )
         {
             add_action( 
                 'wp_logout', 
@@ -36,7 +36,7 @@ class HooksLogin {
         }
         
         # CUSTOM MESSAGE FOR LOGIN ERRORS
-        if ( ADTW()->getop('loginpage_errors') ) {
+        if ( ADTW()->getOption('loginpage_errors') ) {
             add_filter( 
                 'login_errors', 
                 [$this, 'error_msg'] 
@@ -44,7 +44,7 @@ class HooksLogin {
         }
         
         # DISABLE SHAKING
-        if ( ADTW()->getop('loginpage_disable_shaking') ) {
+        if ( ADTW()->getOption('loginpage_disable_shaking') ) {
             add_filter( 
                 'shake_error_codes', 
                 '__return_empty_array', 
@@ -53,7 +53,7 @@ class HooksLogin {
         }
 
         # CUSTOM URL FOR LOGO
-        if ( ADTW()->getop('loginpage_logo_url') ) {
+        if ( ADTW()->getOption('loginpage_logo_url') ) {
             add_filter( 
                 'login_headerurl', 
                 [$this, 'logo_link'], 
@@ -62,7 +62,7 @@ class HooksLogin {
         }
 
         # REMOVE WP CSS
-        if ( ADTW()->getop('loginpage_remove_css') ) {
+        if ( ADTW()->getOption('loginpage_remove_css') ) {
             add_action( 
                 'login_init', 
                 [$this, 'remove_css'] 
@@ -77,7 +77,7 @@ class HooksLogin {
         );
         
         # ADD JS
-        if ( ADTW()->getop('loginpage_extra_js') ) {
+        if ( ADTW()->getOption('loginpage_extra_js') ) {
             add_action( 
                 'login_footer', 
                 [$this, 'login_js'], 
@@ -86,7 +86,7 @@ class HooksLogin {
         }
 
         # ADD JS INPUT FIELDS
-        if ( ADTW()->getop('loginpage_labels_hide') ) {
+        if ( ADTW()->getOption('loginpage_labels_hide') ) {
             add_action( 
                 'login_footer', 
                 [$this, 'login_js_placeholders'], 
@@ -95,7 +95,7 @@ class HooksLogin {
         }
 
         # ADD HTML
-        if ( ADTW()->getop('loginpage_extra_html') ) {
+        if ( ADTW()->getOption('loginpage_extra_html') ) {
             add_action( 
                 'login_header', 
                 [$this, 'login_html'], 
@@ -114,7 +114,7 @@ class HooksLogin {
      * @return string URL
      */
     public function login_redirect( $redirect_to, $request, $user ) {
-        return ADTW()->getop('login_redirect_url');
+        return ADTW()->getOption('login_redirect_url');
     }
 
 
@@ -124,7 +124,7 @@ class HooksLogin {
      * @return action Do redirect
      */
     public function logout_redirect() {
-        wp_redirect( ADTW()->getop('logout_redirect_url') );
+        wp_redirect( ADTW()->getOption('logout_redirect_url') );
         die();
     }
 
@@ -135,7 +135,7 @@ class HooksLogin {
      * @return type
      */
     public function logo_title() {
-        return ADTW()->getop('loginpage_logo_tooltip');
+        return ADTW()->getOption('loginpage_logo_tooltip');
     }
 
 
@@ -145,7 +145,7 @@ class HooksLogin {
      * @return string URL
      */
      public function logo_link() {
-       return ADTW()->getop('loginpage_logo_url');
+       return ADTW()->getOption('loginpage_logo_url');
     }
 
 
@@ -155,7 +155,7 @@ class HooksLogin {
      * @return string
      */
     public function error_msg() {
-        $errorMsg = esc_html( stripslashes( ADTW()->getop('loginpage_errors_txt') ) );
+        $errorMsg = esc_html( stripslashes( ADTW()->getOption('loginpage_errors_txt') ) );
         return $errorMsg;
     }
 
@@ -185,12 +185,12 @@ class HooksLogin {
      */
     function login_css() {
         // LOGO
-        $logo_height  = !empty(ADTW()->getop('loginpage_logo_height')['height']) 
-            ? $this->_doHeight(ADTW()->getop('loginpage_logo_height')['height']) : '';
+        $logo_height  = !empty(ADTW()->getOption('loginpage_logo_height')['height']) 
+            ? $this->_doHeight(ADTW()->getOption('loginpage_logo_height')['height']) : '';
         
-        $logo_img     = !empty(ADTW()->getop('loginpage_logo_img')['url'])
+        $logo_img     = !empty(ADTW()->getOption('loginpage_logo_img')['url'])
             ? 'background-image:url(' 
-				. ADTW()->getop('loginpage_logo_img')['url'] 
+				. ADTW()->getOption('loginpage_logo_img')['url'] 
 				. ') !important;' 
 			: '';
         
@@ -203,46 +203,46 @@ class HooksLogin {
 				: '';        
                     
         // FORM CONTAINER (width)
-        $frm_width    = !empty(ADTW()->getop('loginpage_form_dimensions')['width']) 
-            ? 'width: ' . ADTW()->getop('loginpage_form_dimensions')['width'] . ';' : '';
+        $frm_width    = !empty(ADTW()->getOption('loginpage_form_dimensions')['width']) 
+            ? 'width: ' . ADTW()->getOption('loginpage_form_dimensions')['width'] . ';' : '';
         
         $div_login = !empty($frm_width) ? '#login{' . $frm_width . '} '  . "\r\n" . "\r\n" : '';
         
 
         // FORM TAG
-        $frm_height    = !empty(ADTW()->getop('loginpage_form_dimensions')['height']) 
-            ? 'height: ' . ADTW()->getop('loginpage_form_dimensions')['height'] . ';' : '';
+        $frm_height    = !empty(ADTW()->getOption('loginpage_form_dimensions')['height']) 
+            ? 'height: ' . ADTW()->getOption('loginpage_form_dimensions')['height'] . ';' : '';
         
-        $frm_margintop    = !empty(ADTW()->getop('loginpage_form_margintop')['height']) 
-            ? 'margin-top: ' . ADTW()->getop('loginpage_form_margintop')['height'] . ';' : '';
+        $frm_margintop    = !empty(ADTW()->getOption('loginpage_form_margintop')['height']) 
+            ? 'margin-top: ' . ADTW()->getOption('loginpage_form_margintop')['height'] . ';' : '';
         
-        $frm_rounded   = !empty(ADTW()->getop('loginpage_form_rounded')['width']) 
+        $frm_rounded   = !empty(ADTW()->getOption('loginpage_form_rounded')['width']) 
             ? '-webkit-border-radius:' 
-				. ADTW()->getop('loginpage_form_rounded')['width'] 
+				. ADTW()->getOption('loginpage_form_rounded')['width'] 
 				. ';border-radius:' 
-				. ADTW()->getop('loginpage_form_rounded')['width']
+				. ADTW()->getOption('loginpage_form_rounded')['width']
 				. ';' 
 			: '';
         
-        $frm_border    = ADTW()->getop('loginpage_form_border') 
+        $frm_border    = ADTW()->getOption('loginpage_form_border') 
             ? 'border:0px;' : '';
         
-        $frm_bg        = !empty(ADTW()->getop('loginpage_form_bg_img')['url']) 
+        $frm_bg        = !empty(ADTW()->getOption('loginpage_form_bg_img')['url']) 
             ? 'background: url(' 
-				. ADTW()->getop('loginpage_form_bg_img')['url'] 
+				. ADTW()->getOption('loginpage_form_bg_img')['url'] 
 				. ') no-repeat;' 
 			: '';
         
         $frm_color     = 
-            ADTW()->getop('loginpage_form_bg_color') 
-            ? 'background-color: ' . ADTW()->getop('loginpage_form_bg_color') . ';' : '';
+            ADTW()->getOption('loginpage_form_bg_color') 
+            ? 'background-color: ' . ADTW()->getOption('loginpage_form_bg_color') . ';' : '';
 
         $frm_labels = 
-            ADTW()->getop('loginpage_labels_hide') 
+            ADTW()->getOption('loginpage_labels_hide') 
             ? ' label[for="user_pass"], label[for="user_login"] {display:none !important} .login form .input { font-size: 16px } ' : '';
 
         $frm_pw = 
-            ADTW()->getop('loginpage_pw_hide') 
+            ADTW()->getOption('loginpage_pw_hide') 
             ? ' #nav {display:none !important} ' : '';
 
         $div_loginform = (!empty($frm_border)||!empty($frm_height)||!empty($frm_margintop)||!empty($frm_rounded)||!empty($frm_bg)||!empty($frm_color)||!empty($frm_labels)||!empty($frm_pw)) 
@@ -257,40 +257,40 @@ class HooksLogin {
         
         // BODY
         $body_color     = 
-                ADTW()->getop('loginpage_body_color') 
-            ? 'background-color:' . ADTW()->getop('loginpage_body_color') . ';' : '';
+                ADTW()->getOption('loginpage_body_color') 
+            ? 'background-color:' . ADTW()->getOption('loginpage_body_color') . ';' : '';
         
         $body_position   = '';
-        if( ADTW()->getop('loginpage_body_position') ) {
-            if( 'empty' != ADTW()->getop('loginpage_body_position') )
+        if( ADTW()->getOption('loginpage_body_position') ) {
+            if( 'empty' != ADTW()->getOption('loginpage_body_position') )
                 $body_position = str_replace( 
 						'_', 
 						' ', 
-						ADTW()->getop('loginpage_body_position') 
+						ADTW()->getOption('loginpage_body_position') 
 				) . ' ';
 			 else
 				 $body_position = '';
         }
 		
         $body_repeat     = '';
-        if( ADTW()->getop('loginpage_body_repeat' ) ) {
-            if( 'empty' != ADTW()->getop('loginpage_body_repeat') )
-                $body_repeat = ADTW()->getop('loginpage_body_repeat') . ' ';
+        if( ADTW()->getOption('loginpage_body_repeat' ) ) {
+            if( 'empty' != ADTW()->getOption('loginpage_body_repeat') )
+                $body_repeat = ADTW()->getOption('loginpage_body_repeat') . ' ';
 			else
 				$body_repeat = '';
         }
 		
         $body_attachment     = '';
-        if( ADTW()->getop('loginpage_body_attachment') ) {
-            if( 'empty' != ADTW()->getop('loginpage_body_attachment') ) 
-                $body_attachment = ADTW()->getop('loginpage_body_repeat') . ' ';
+        if( ADTW()->getOption('loginpage_body_attachment') ) {
+            if( 'empty' != ADTW()->getOption('loginpage_body_attachment') ) 
+                $body_attachment = ADTW()->getOption('loginpage_body_repeat') . ' ';
 			else
 				$body_attachment = '';
         }
 		
 		
-        $body_img        = !empty(ADTW()->getop('loginpage_body_img')['url'])
-            ? 'url(' . ADTW()->getop('loginpage_body_img')['url'] . ')' : '';
+        $body_img        = !empty(ADTW()->getOption('loginpage_body_img')['url'])
+            ? 'url(' . ADTW()->getOption('loginpage_body_img')['url'] . ')' : '';
  
 		
         $css_img         = (!empty($body_position)||!empty($body_repeat)||!empty($body_attachment)||!empty($body_img))  
@@ -308,20 +308,20 @@ class HooksLogin {
 
 
         // BACK TO BLOG
-        $p_backtoblog        = ADTW()->getop('loginpage_backsite_hide') 
+        $p_backtoblog        = ADTW()->getOption('loginpage_backsite_hide') 
             ? ' p#backtoblog{display:none !important;} '  . "\r\n" . "\r\n"
 			: '';
 
 
         // LANGUAGES
-        $select_languages        = ADTW()->getop('loginpage_hide_languages') 
+        $select_languages        = ADTW()->getOption('loginpage_hide_languages') 
             ? ' div.language-switcher{display:none !important;} '  . "\r\n" . "\r\n"
 			: '';
 
 
         // EXTRA CSS
-        $extra_css = ADTW()->getop('loginpage_extra_css')
-                ? ADTW()->getop('loginpage_extra_css')  . "\r\n" . "\r\n"
+        $extra_css = ADTW()->getOption('loginpage_extra_css')
+                ? ADTW()->getOption('loginpage_extra_css')  . "\r\n" . "\r\n"
                 : '';
         
         
@@ -345,7 +345,7 @@ class HooksLogin {
     public function login_js() {
         printf(
             '<script>%s</script>',
-            ADTW()->getop('loginpage_extra_js')
+            ADTW()->getOption('loginpage_extra_js')
         );
     }
     
@@ -360,7 +360,7 @@ class HooksLogin {
     }
     
     public function login_html() {
-        echo ADTW()->getop('loginpage_extra_html');
+        echo ADTW()->getOption('loginpage_extra_html');
     }
     
 }

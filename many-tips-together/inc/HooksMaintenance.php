@@ -15,9 +15,9 @@ class HooksMaintenance {
 	 * @return void
 	 */
 	public function __construct() {
-        if( ADTW()->getop('maintenance_mode_enable') ) {
+        if( ADTW()->getOption('maintenance_mode_enable') ) {
             // BACKEND MAINTENANCE
-			if( ADTW()->getop('maintenance_mode_backend') ) {
+			if( ADTW()->getOption('maintenance_mode_backend') ) {
                 add_action( 
                     'admin_head', 
                     [$this, 'do_maintenance'] 
@@ -43,8 +43,8 @@ class HooksMaintenance {
 	 * 
 	 */
 	public function do_maintenance() {
-		$level = ADTW()->getop('maintenance_mode_level') 
-                ? ADTW()->getop('maintenance_mode_level') 
+		$level = ADTW()->getOption('maintenance_mode_level') 
+                ? ADTW()->getOption('maintenance_mode_level') 
                 : 'administrator';
         
         $roles = [
@@ -64,8 +64,8 @@ class HooksMaintenance {
             );
 			// BROWSER TITLE
 			$title = 
-					ADTW()->getop('maintenance_mode_title')
-					? ADTW()->getop('maintenance_mode_title') 
+					ADTW()->getOption('maintenance_mode_title')
+					? ADTW()->getOption('maintenance_mode_title') 
 					: $default_title;
 
 			// IMAGES
@@ -74,20 +74,20 @@ class HooksMaintenance {
 
 			// LINE 0
 			$siteName = 
-                    ADTW()->getop('maintenance_mode_line0')
-					? ADTW()->getop('maintenance_mode_line0') 
+                    ADTW()->getOption('maintenance_mode_line0')
+					? ADTW()->getOption('maintenance_mode_line0') 
 					: esc_html__( 'Site in maintenance', 'mtt' );
 
 			// LINE 1
 			$line1Text = 
-                    ADTW()->getop('maintenance_mode_line1') 
-					? ADTW()->getop('maintenance_mode_line1') 
+                    ADTW()->getOption('maintenance_mode_line1') 
+					? ADTW()->getOption('maintenance_mode_line1') 
 					: $default_line1;
 
 			// LINE 2
 			$line2Text = 
-					ADTW()->getop('maintenance_mode_line2') 
-					? ADTW()->getop('maintenance_mode_line2') 
+					ADTW()->getOption('maintenance_mode_line2') 
+					? ADTW()->getOption('maintenance_mode_line2') 
 					: get_bloginfo( 'url' );
             $line2Text = strtok($line2Text, '?');
             $line2Text = untrailingslashit($line2Text );
@@ -97,16 +97,16 @@ class HooksMaintenance {
 
 			// HTML BACKGROUND
             $bgcolor =  
-					ADTW()->getop('maintenance_mode_bg_color') 
-					? ADTW()->getop('maintenance_mode_bg_color')
+					ADTW()->getOption('maintenance_mode_bg_color') 
+					? ADTW()->getOption('maintenance_mode_bg_color')
                     : '';
 
             if( $bgcolor !== '' )
 				$bgcolor = "background-color: $bgcolor ;";
 
 			$stripes = 
-					ADTW()->getop('maintenance_mode_html_img')['url'] 
-					? ADTW()->getop('maintenance_mode_html_img')['url']
+					ADTW()->getOption('maintenance_mode_html_img')['url'] 
+					? ADTW()->getOption('maintenance_mode_html_img')['url']
                     : '';
 
             if( $stripes !== '' )
@@ -116,8 +116,8 @@ class HooksMaintenance {
 
 			// BOX ("body") BACKGROUND
 			$box_bg = 
-					ADTW()->getop('maintenance_mode_body_img')['url']
-					? ADTW()->getop('maintenance_mode_body_img')['url'] : '';
+					ADTW()->getOption('maintenance_mode_body_img')['url']
+					? ADTW()->getOption('maintenance_mode_body_img')['url'] : '';
 
 			$box_shadow = '-webkit-border-radius: 23px; border-radius: 23px; -moz-box-shadow: 5px 5px 8px #DCDCDC; -webkit-box-shadow: 5px 5px 8px #DCDCDC; box-shadow: 5px 5px 8px #DCDCDC;';
 
@@ -128,8 +128,8 @@ class HooksMaintenance {
 
 			// CUSTOM CSS
 			$extraCss = 
-                ADTW()->getop('maintenance_mode_extra_css') 
-                ? ADTW()->getop('maintenance_mode_extra_css') : '';
+                ADTW()->getOption('maintenance_mode_extra_css') 
+                ? ADTW()->getOption('maintenance_mode_extra_css') : '';
 
 			// CSS of this file
 			$msg = "<style type='text/css'>

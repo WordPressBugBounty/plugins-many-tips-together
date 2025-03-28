@@ -17,12 +17,12 @@ class HooksMedia {
 	public function __construct() 
     {
         # BIG IMAGE THRESHOLD
-		if( ADTW()->getop('media_big_image_size') && !ADTW()->getop('media_big_image_disable') ) {
+		if( ADTW()->getOption('media_big_image_size') && !ADTW()->getOption('media_big_image_disable') ) {
             add_filter( 'big_image_size_threshold', function(){
-                return ADTW()->getop('media_big_image_size');
+                return ADTW()->getOption('media_big_image_size');
             });
         }
-		if( ADTW()->getop('media_big_image_disable') ) {
+		if( ADTW()->getOption('media_big_image_disable') ) {
             add_filter( 'big_image_size_threshold', '__return_false' );
         }
 
@@ -30,7 +30,7 @@ class HooksMedia {
 		$no_grid = ( 'list' == $current_display );
         
 		# BIGGER THUMBS
-		if( ADTW()->getop('media_image_bigger_thumbs') && $no_grid ) {
+		if( ADTW()->getOption('media_image_bigger_thumbs') && $no_grid ) {
             add_action( 
                 'admin_head-upload.php', 
                 [$this, 'biggerThumbs'] 
@@ -38,7 +38,7 @@ class HooksMedia {
         }
 
         # CAMERA EXIF
-		if( ADTW()->getop('media_camera_exif') ) {
+		if( ADTW()->getOption('media_camera_exif') ) {
 			add_filter( 
                 'manage_upload_columns', 
                 [$this, 'camera_info_column'] 
@@ -60,16 +60,16 @@ class HooksMedia {
             'admin_init',
             function() {
                 $to = (int) ( !! get_option( 'wp_attachment_pages_enabled' ) );;
-                if( ADTW()->getop('attachment_pages_enabled') && !$to )  {
+                if( ADTW()->getOption('attachment_pages_enabled') && !$to )  {
                     update_option( 'wp_attachment_pages_enabled', 1 );
-                } else if( !ADTW()->getop('attachment_pages_enabled') && $to )  {
+                } else if( !ADTW()->getOption('attachment_pages_enabled') && $to )  {
                     update_option( 'wp_attachment_pages_enabled', 0 );
                 }
             }
         );
 
         # SANITIZE FILENAME
-		if( ADTW()->getop('media_sanitize_filename') )
+		if( ADTW()->getOption('media_sanitize_filename') )
 			add_filter(
                 'sanitize_file_name', 
                 [$this, 'sanitize_filename'], 
@@ -77,7 +77,7 @@ class HooksMedia {
 			);
   
 		# ALLOW SVG
-		if( ADTW()->getop('media_allow_svg') ) {
+		if( ADTW()->getOption('media_allow_svg') ) {
             add_filter(
                 'upload_mimes', 
                 [$this, 'allow_svg'],
@@ -92,7 +92,7 @@ class HooksMedia {
         }
 
 		# CUSTOM SIZES IN INSERT MEDIA
-		if( ADTW()->getop('media_include_extras_sizes') )
+		if( ADTW()->getOption('media_include_extras_sizes') )
 			add_filter(
                 'image_size_names_choose', 
                 [$this, 'include_extras_sizes']

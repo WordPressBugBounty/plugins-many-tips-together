@@ -17,7 +17,7 @@ class HooksUsers {
 	public function __construct() {
 
         # FILTER BY 
-		if( ADTW()->getop('users_live_filter') ) {
+		if( ADTW()->getOption('users_live_filter') ) {
             add_action( 
                 'admin_print_footer_scripts-users.php', 
                 [$this, 'printScripts']
@@ -25,7 +25,7 @@ class HooksUsers {
         }
 
         # ADD ID COLUMN
-		if( ADTW()->getop('users_id_column') ) {
+		if( ADTW()->getOption('users_id_column') ) {
             add_action( 
                 'manage_users_custom_column', 
                 [$this, 'renderIDColumn'],
@@ -42,7 +42,7 @@ class HooksUsers {
         }
 
         # CONTACT METHODS (FB, AIM..)
-		if( ADTW()->getop('profile_social') ) {
+		if( ADTW()->getOption('profile_social') ) {
 			add_filter( 
                 'user_contactmethods', 
                 [$this, 'contact_metods'] 
@@ -126,7 +126,7 @@ class HooksUsers {
 	 * @return string
 	 */
 	public function contact_metods( $contactmethods ) {
-        $ops = ADTW()->getop('profile_social');
+        $ops = ADTW()->getOption('profile_social');
         $all = ADTW()->getSocials();
         if ($ops) {
             foreach ($ops as $op) {
@@ -145,21 +145,21 @@ class HooksUsers {
 		$style = '';
         $tohide = [];
         $listtohide = '';
-		if( ADTW()->getop('profile_css') ) {
-			$style = ADTW()->getop('profile_css');
+		if( ADTW()->getOption('profile_css') ) {
+			$style = ADTW()->getOption('profile_css');
         }
-		if( ADTW()->getop('profile_h2_titles') )
+		if( ADTW()->getOption('profile_h2_titles') )
 			$tohide[] = '#your-profile h2';
 
-		if( ADTW()->getop('profile_app_pw') )
+		if( ADTW()->getOption('profile_app_pw') )
 			$tohide[] = '#application-passwords-section';
 
         $tohide = array_merge(
             $tohide,
-            $this->_doCSS( ADTW()->getop('profile_personal_options') ),
-            $this->_doCSS( ADTW()->getop('profile_name') ),
-            $this->_doCSS( ADTW()->getop('profile_contact_info') ),
-            $this->_doCSS( ADTW()->getop('profile_about_yourself') )
+            $this->_doCSS( ADTW()->getOption('profile_personal_options') ),
+            $this->_doCSS( ADTW()->getOption('profile_name') ),
+            $this->_doCSS( ADTW()->getOption('profile_contact_info') ),
+            $this->_doCSS( ADTW()->getOption('profile_about_yourself') )
         );
         if ( !empty($tohide) ) {
             $listtohide = sprintf(

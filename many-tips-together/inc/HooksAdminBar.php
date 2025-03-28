@@ -16,7 +16,7 @@ class HooksAdminBar {
      */
     public function __construct() {
         # COMPLETELY REMOVE
-        if( ADTW()->getop('adminbar_completely_disable') ) {
+        if( ADTW()->getOption('adminbar_completely_disable') ) {
             add_action( 
                 'init', 
                 [$this, 'removeAdminBar'], 
@@ -33,7 +33,7 @@ class HooksAdminBar {
         }
 
         # DISABLE IN FRONT END
-        if( ADTW()->getop('adminbar_disable') ) {
+        if( ADTW()->getOption('adminbar_disable') ) {
             add_filter( 
                 'show_admin_bar', 
                 '__return_false', 
@@ -42,7 +42,7 @@ class HooksAdminBar {
         }
 
         # REMOVE DEFAULT ITEMS
-        if( ADTW()->getop('adminbar_remove') ) {
+        if( ADTW()->getOption('adminbar_remove') ) {
             add_action( 
                 'wp_before_admin_bar_render', 
                 [$this, 'removeItems'], 
@@ -51,7 +51,7 @@ class HooksAdminBar {
         }
 
         # MODIFY HOWDY
-        if( ADTW()->getop('adminbar_howdy_enable') ) {
+        if( ADTW()->getOption('adminbar_howdy_enable') ) {
             add_action( 
                 'admin_bar_menu', 
                 [$this, 'goodbyeHowdy'],
@@ -60,7 +60,7 @@ class HooksAdminBar {
         }    
 
         # SITE NAME WITH ICON
-        if( ADTW()->getop('adminbar_sitename_enable') ) {
+        if( ADTW()->getOption('adminbar_sitename_enable') ) {
             add_action( 
                 'admin_bar_menu', 
                 [$this, 'siteName'], 
@@ -69,7 +69,7 @@ class HooksAdminBar {
         }
         
         # ADMIN TWEAKS SHORTCUT
-        if( ADTW()->getop('adminbar_adtw_enable') 
+        if( ADTW()->getOption('adminbar_adtw_enable') 
             && current_user_can( 'manage_options' ) ) {
             add_action( 
                 'admin_bar_menu', 
@@ -79,7 +79,7 @@ class HooksAdminBar {
         }
 
         # ADD CUSTOM MENU
-        if( ADTW()->getop('adminbar_custom_enable') ) {
+        if( ADTW()->getOption('adminbar_custom_enable') ) {
             add_action( 
                 'admin_bar_menu', 
                 [$this, 'customMenu'], 
@@ -173,12 +173,12 @@ class HooksAdminBar {
         if( !$wp_admin_bar->get_node( 'user-actions' ) )
             return;
     
-        $howdy = ADTW()->getop('adminbar_howdy_text') 
-                ?  $this->_add_comma_if_missing(ADTW()->getop('adminbar_howdy_text'))
+        $howdy = ADTW()->getOption('adminbar_howdy_text') 
+                ?  $this->_add_comma_if_missing(ADTW()->getOption('adminbar_howdy_text'))
                 : '';
         $original = 'Howdy,';
-        if ( !empty(ADTW()->getop('adminbar_howdy_original_text')) && ADTW()->is_translation() ) {
-            $original = $this->_add_comma_if_missing( ADTW()->getop('adminbar_howdy_original_text') );
+        if ( !empty(ADTW()->getOption('adminbar_howdy_original_text')) && ADTW()->is_translation() ) {
+            $original = $this->_add_comma_if_missing( ADTW()->getOption('adminbar_howdy_original_text') );
         }
         
         $my_account = $wp_admin_bar->get_node('my-account');
@@ -196,7 +196,7 @@ class HooksAdminBar {
      */
     public function removeItems() {
         global $wp_admin_bar;
-        foreach ( ADTW()->getop('adminbar_remove') as $item ) {
+        foreach ( ADTW()->getOption('adminbar_remove') as $item ) {
             $wp_admin_bar->remove_menu($item);
         }
     }
@@ -227,11 +227,11 @@ class HooksAdminBar {
     public function siteName() {
         global $wp_admin_bar;
         
-        $title = ADTW()->getop('adminbar_sitename_title');
+        $title = ADTW()->getOption('adminbar_sitename_title');
         $icon  = 
-                ADTW()->getop('adminbar_sitename_img') 
-                ? ADTW()->getop('adminbar_sitename_img')['url'] : '';
-        $url   = ADTW()->getop('adminbar_sitename_url');
+                ADTW()->getOption('adminbar_sitename_img') 
+                ? ADTW()->getOption('adminbar_sitename_img')['url'] : '';
+        $url   = ADTW()->getOption('adminbar_sitename_url');
 
 
         $do_title = 
@@ -262,11 +262,11 @@ class HooksAdminBar {
         global $wp_admin_bar;
         
         // ERROR, empty array
-        if( ADTW()->getop('adminbar_custom_item_name') === false )
+        if( ADTW()->getOption('adminbar_custom_item_name') === false )
             return;
 
-        $links = ADTW()->getop('adminbar_custom_item_url');
-        $titles = ADTW()->getop('adminbar_custom_item_name');
+        $links = ADTW()->getOption('adminbar_custom_item_url');
+        $titles = ADTW()->getOption('adminbar_custom_item_name');
         
         // PARENT      
         $wp_admin_bar->add_menu([

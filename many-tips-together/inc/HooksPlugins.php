@@ -17,7 +17,7 @@ class HooksPlugins {
 	public function __construct() {
 
 		# DISABLE PLUGIN UPDATE NOTICES
-		if( ADTW()->getop('plugins_block_update_notice') ) {
+		if( ADTW()->getOption('plugins_block_update_notice') ) {
 			add_filter(
                 'pre_site_transient_update_plugins', 
                 '__return_null'
@@ -32,7 +32,7 @@ class HooksPlugins {
         }
 
 		# DISABLE INACTIVE PLUGIN UPDATE NOTICES
-		if( ADTW()->getop('plugins_block_update_inactive_plugins') && !is_multisite() ) {
+		if( ADTW()->getOption('plugins_block_update_inactive_plugins') && !is_multisite() ) {
 			add_filter(
                 'site_transient_update_plugins', 
                 [$this, 'remove_update_nag_for_deactivated']
@@ -47,7 +47,7 @@ class HooksPlugins {
         }
         
 		# DISABLE EMAIL AUTO-UPDATE NOTICES
-		if( ADTW()->getop('plugins_block_emails_updates') ) {
+		if( ADTW()->getOption('plugins_block_emails_updates') ) {
 			add_filter(
                 'auto_plugin_update_send_email', 
                 '__return_false'
@@ -55,7 +55,7 @@ class HooksPlugins {
         }
         
 		# FILTER BY 
-		if( ADTW()->getop('plugins_live_filter') ) {
+		if( ADTW()->getOption('plugins_live_filter') ) {
             add_action( 
                 'admin_print_footer_scripts-plugins.php', 
                 [$this, 'printFilterPlugins']
@@ -63,7 +63,7 @@ class HooksPlugins {
         }
 
 		# ADD LAST UPDATED INFORMATION
-		if( ADTW()->getop('plugins_add_last_updated') ) {
+		if( ADTW()->getOption('plugins_add_last_updated') ) {
 			add_filter(
                 'plugin_row_meta', 
                 [$this, 'lastUpdated'],
@@ -152,10 +152,10 @@ class HooksPlugins {
             admin_url('admin.php?page=admintweaks&tab=8'),
             __('settings','mtt')
         );
-        if( ADTW()->getop('plugins_block_update_inactive_plugins') ) {
+        if( ADTW()->getOption('plugins_block_update_inactive_plugins') ) {
             # deactivated only
             $base = __('UPDATES NOT SHOWING for disabled plugins', 'mtt');
-        } else if ( ADTW()->getop('plugins_block_update_notice') ) {
+        } else if ( ADTW()->getOption('plugins_block_update_notice') ) {
             # all plugins
             $base = __('UPDATES NOT SHOWING for all plugins', 'mtt');
         }
@@ -172,9 +172,11 @@ class HooksPlugins {
 	public function remove_update_nag_for_deactivated( $value ) {
 		if( empty( $value ) || empty( $value->response ) )
 			return $value;
-		
+        if (!function_exists('is_plugin_active')) {
+            include_once(ABSPATH . 'wp-admin/includes/plugin.php');
+        }
 		foreach( $value->response as $key => $val ) {
-			if( !is_plugin_active( $val->plugin ) )
+			if( !\is_plugin_active( $val->plugin ) )
 				unset( $value->response[$key] );
 		}
 		return $value;
@@ -228,32 +230,32 @@ class HooksPlugins {
 	 */
 	public function pluginsCSSJS() 
     {    
-		$display_count = ADTW()->getop('plugins_my_plugins_count');
+		$display_count = ADTW()->getOption('plugins_my_plugins_count');
 
 		// GENERAL OUTPUT
 		$output = '';
 
 		// UPDATE NOTICE
-		if( ADTW()->getop('plugins_remove_plugin_notice') )
+		if( ADTW()->getOption('plugins_remove_plugin_notice') )
 			$output .= '.update-message{display:none;} ';
 
 		// INACTIVE
-		if( ADTW()->getop('plugins_inactive_bg_color') )
-			$output .= 'tr.inactive {background-color:' . ADTW()->getop('plugins_inactive_bg_color') . ' !important;}';
+		if( ADTW()->getOption('plugins_inactive_bg_color') )
+			$output .= 'tr.inactive {background-color:' . ADTW()->getOption('plugins_inactive_bg_color') . ' !important;}';
 
 		if( !empty($output)  )  {
 			echo '<style type="text/css">' . $output . ' </style>' . "\r\n";
         }
         // YOUR PLUGINS COLOR
-        if( ADTW()->getop('plugins_my_plugins_bg_color') 
-            && ADTW()->getop('plugins_my_plugins_names') 
-            && ADTW()->getop('plugins_my_plugins_color') 
+        if( ADTW()->getOption('plugins_my_plugins_bg_color') 
+            && ADTW()->getOption('plugins_my_plugins_names') 
+            && ADTW()->getOption('plugins_my_plugins_color') 
         ) {        
-            $authors = explode( ',', ADTW()->getop('plugins_my_plugins_names'));
+            $authors = explode( ',', ADTW()->getOption('plugins_my_plugins_names'));
         
             $jq = array( );
             foreach( $authors as $author ) {
-                $jq[] = "tr:Contains('{$author}')";
+                $jq[] = "tr td.column-description:Contains('{$author}')";
             }
             $jq_ok = implode( ',', $jq );
             $by_author = esc_html__( 'by selected author(s)', 'mtt' );
@@ -273,13 +275,14 @@ class HooksPlugins {
                     
                     // Modify the plugin rows background
                     $("<?php echo $jq_ok; ?>").each(function() {
-                        if ($(this).hasClass('inactive'))
+                        var parent = $(this).parent();
+                        if (parent.hasClass('inactive'))
                             opac = '0.6';
                         else
                             opac = '1';
                         //$(this).removeClass('inactive');
-                        $('td,th', this).css('background-color', '<?php echo ADTW()->getop('plugins_my_plugins_color'); ?>');
-                        $(this).css('opacity', opac);
+                        parent.find('td,th').css('background-color', '<?php echo ADTW()->getOption('plugins_my_plugins_color'); ?>');
+                        parent.css('opacity', opac);
                     });
                 });
             </script>

@@ -3,9 +3,11 @@ Contributors: brasofilo
 Tags: customize, admin interface, profile, login, maintenance mode
 Requires at least: 5.0
 Tested up to: 6.7.1
-Stable tag: 3.3
+Stable tag: 3.3.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
+
+Customize various aspects of WordPress backend. Create a clean and easier admin area for the users.
 
 == Description ==
 
@@ -23,7 +25,7 @@ So, we are together!
 * General Settings: enable arcane Link Manager; privacy; other misc options.
 * Listings: customize rows and columns for post types, users and plugins.
 * Media: custom columns; re-attachment; sanitize filenames; jpeg quality; audio/photo/video metadata.
-* Plugins: many row modifications; live filter by keyword/active/inactive; move plugins menus from the main menu into the Tools menu (Code Snippets, ACF, The SEO Framework, Hide Admin Notices).
+* Plugins: many row modifications; live filter by keyword/active/inactive; move plugins menus from the main menu into the Tools menu (Code Snippets, The SEO Framework, Hide Admin Notices).
 * User Profile: remove almost everything; add custom CSS.
 * Login: redirects; errors; modify almost everything; add custom CSS.
 * Maintenance Mode: with minimum Role allowed and possibility to block only the backend.
@@ -63,9 +65,15 @@ Don't hesitate in posting a new topic here in [WordPress support forum](https://
 
 == Changelog ==
 
+**Version 3.3.1**
+
+* Bug fixes
+
 **Version 3.3**
 
 * Added option to not create attachment pages automatically
+* Code reviewed and small bugs fixed
+* Removed ACF menu handling
 
 **Version 3.2.1**
 

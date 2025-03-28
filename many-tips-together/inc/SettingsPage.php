@@ -18,8 +18,6 @@ class SettingsPage {
         );
 
 
-        # I THINK THIS IS OBSOLETE, NOT SURE YET :D
-        /*
         add_action(
             'load-settings_page_admintweaks', 
             function(){
@@ -29,7 +27,7 @@ class SettingsPage {
                     999999
                 );
             }
-        );*/
+        );
 
         # ADTW()->debug("Admin Tweaks v".AdminTweaks::VERSION);
         
@@ -149,7 +147,7 @@ class SettingsPage {
      */
     public static function adminMenusSnapshot() 
     {
-        ADTW()->setSupport();
+        ADTW()->updateSupportData();
     }
 
     /**

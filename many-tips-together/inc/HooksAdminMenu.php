@@ -17,7 +17,7 @@ class HooksAdminMenu {
 	public function __construct() {
 
         # RE-ADD CUSTOMIZE.PHP
-		if( ADTW()->getop('admin_menus_readd_customize') ) {
+		if( ADTW()->getOption('admin_menus_readd_customize') ) {
             add_action( 'admin_menu', function () {
                     if ( !ADTW()->customize_menu_exists() ) {
                         add_theme_page( __('Customize'), __('Customize'), 'edit_pages', 'customize.php');
@@ -26,7 +26,7 @@ class HooksAdminMenu {
         }
 
         # ENABLE LINK MANAGER
-		if( ADTW()->getop('admin_menus_enable_link_manager') ) {
+		if( ADTW()->getOption('admin_menus_enable_link_manager') ) {
 			add_filter( 
                 'pre_option_link_manager_enabled', 
                 '__return_true' 
@@ -34,7 +34,7 @@ class HooksAdminMenu {
         }
 
 		# REMOVE ITEMS
-		if( ADTW()->getop('admin_menus_remove') ) {
+		if( ADTW()->getOption('admin_menus_remove') ) {
 			add_action( 
                 'admin_menu', 
                 [$this, 'removeItems'], 
@@ -43,7 +43,7 @@ class HooksAdminMenu {
         }
 
 		# REMOVE SUBITEMS
-		if( ADTW()->getop('admin_submenus_remove') ) {
+		if( ADTW()->getOption('admin_submenus_remove') ) {
 			add_action( 
                 'admin_menu', 
                 [$this, 'removeSubItems'], 
@@ -62,8 +62,8 @@ class HooksAdminMenu {
         ); 
 
 		# SORT SETTINGS
-		if( ADTW()->getop('admin_menus_sort_wordpress')
-			|| ADTW()->getop('admin_menus_sort_plugins' ) ) 
+		if( ADTW()->getOption('admin_menus_sort_wordpress')
+			|| ADTW()->getOption('admin_menus_sort_plugins' ) ) 
         {
 			add_action( 
                 'admin_menu', 
@@ -73,9 +73,9 @@ class HooksAdminMenu {
         }
 
 		# BUBBLES
-		if( ADTW()->getop('admin_menus_bubbles') 
-            && ADTW()->getop('admin_menus_bubbles_cpts') 
-            && ADTW()->getop('admin_menus_bubbles_status') ) 
+		if( ADTW()->getOption('admin_menus_bubbles') 
+            && ADTW()->getOption('admin_menus_bubbles_cpts') 
+            && ADTW()->getOption('admin_menus_bubbles_status') ) 
         {
             add_action( 
                 'admin_menu', 
@@ -84,7 +84,7 @@ class HooksAdminMenu {
         }
 
 		# RENAME POSTS
-		if( ADTW()->getop('posts_rename_enable') ) {
+		if( ADTW()->getOption('posts_rename_enable') ) {
 			add_action( 
                 'init', 
                 [$this, 'objectLabel'],
@@ -111,7 +111,7 @@ class HooksAdminMenu {
 	 */
 	public function removeItems() {
         $items = array_keys(ADTW()->getMenus());
-        $remove = ADTW()->getop('admin_menus_remove');
+        $remove = ADTW()->getOption('admin_menus_remove');
         foreach( $remove as $key ) {
             if ( isset( $items[$key] ) ) remove_menu_page( $items[$key] );
         }
@@ -121,7 +121,7 @@ class HooksAdminMenu {
 	 * Remove submenu items
 	 */
 	public function removeSubItems() {
-        $remove = ADTW()->getop('admin_submenus_remove');
+        $remove = ADTW()->getOption('admin_submenus_remove');
         foreach( $remove as $key ) {
             $key = str_replace('____', '=', $key);
             $key = str_replace('___', '?', $key);
@@ -147,7 +147,7 @@ class HooksAdminMenu {
 
 		// Sort default items
 		$default = array_slice( $submenu['options-general.php'], 0, 7, true );
-		if( ADTW()->getop('admin_menus_sort_wordpress') ) {
+		if( ADTW()->getOption('admin_menus_sort_wordpress') ) {
 			usort( $default, [$this, '_sortArrayASC'] );
         }
 
@@ -155,7 +155,7 @@ class HooksAdminMenu {
 		$length = count( $submenu['options-general.php'] );
 		$extra = array_slice( $submenu['options-general.php'], 7, $length, true );
 
-		if( ADTW()->getop('admin_menus_sort_plugins') ) {
+		if( ADTW()->getOption('admin_menus_sort_plugins') ) {
 			usort( $extra, [$this, '_sortArrayASC'] );
         }
 		// Apply
@@ -167,8 +167,8 @@ class HooksAdminMenu {
 	public function addBubbles() 
     {
 		global $menu;
-		$bubles = ADTW()->getop('admin_menus_bubbles_cpts');
-        $status = ADTW()->getop('admin_menus_bubbles_status');
+		$bubles = ADTW()->getOption('admin_menus_bubbles_cpts');
+        $status = ADTW()->getOption('admin_menus_bubbles_status');
 		foreach( $bubles as $pt ) {
 			$cpt_count = wp_count_posts( $pt );
 
@@ -212,8 +212,8 @@ class HooksAdminMenu {
 
 		$labels = &$wp_post_types['post']->labels;
 
-		if ( ADTW()->getop('posts_rename_name') ) {
-			$labels->name = ADTW()->getop('posts_rename_name');
+		if ( ADTW()->getOption('posts_rename_name') ) {
+			$labels->name = ADTW()->getOption('posts_rename_name');
         }
 	}
 
@@ -227,9 +227,9 @@ class HooksAdminMenu {
 	public function menuLabel() {
 		global $menu, $submenu;
 
-		if ( ADTW()->getop('posts_rename_name') ) {
-			$menu[5][0] = ADTW()->getop('posts_rename_name');
-			$submenu['edit.php'][5][0]  = ADTW()->getop('posts_rename_name');
+		if ( ADTW()->getOption('posts_rename_name') ) {
+			$menu[5][0] = ADTW()->getOption('posts_rename_name');
+			$submenu['edit.php'][5][0]  = ADTW()->getOption('posts_rename_name');
         }
 	}
 	

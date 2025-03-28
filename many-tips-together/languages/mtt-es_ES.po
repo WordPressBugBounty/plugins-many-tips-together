@@ -244,7 +244,7 @@ msgstr "URL"
 
 #: inc/sections/adminbar.php:64
 msgid "Add Admin Tweaks shortcut"
-msgstr "Agregar acceso directo a Ajustes de Administración"
+msgstr "Agregar acceso directo a Admin Tweaks"
 
 #: inc/sections/adminbar.php:65
 msgid "Useful when configuring this plugin"

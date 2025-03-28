@@ -18,8 +18,8 @@ class HooksGeneral {
 	public function __construct() 
     {
 		# REMOVE/MODIFY WP VERSION
-		if( ADTW()->getop('wpdisable_version_full')
-            || ADTW()->getop('wpdisable_version_number') ) 
+		if( ADTW()->getOption('wpdisable_version_full')
+            || ADTW()->getOption('wpdisable_version_number') ) 
         {
 			add_filter( 
                 'the_generator', 
@@ -28,7 +28,7 @@ class HooksGeneral {
         }
         
 		# EMAIL VERIFY
-		if( ADTW()->getop('email_verification_disable') ) 
+		if( ADTW()->getOption('email_verification_disable') ) 
         {
 			add_filter(
                 'admin_email_check_interval',
@@ -38,7 +38,7 @@ class HooksGeneral {
         }
         
 		# REMOVE SUFFIX FROM ENQUEUED STYLES AND SCRIPTS
-		if( ADTW()->getop('wpdisable_scripts_versioning') ) {
+		if( ADTW()->getOption('wpdisable_scripts_versioning') ) {
             add_filter( 
                 'style_loader_src', 
                 [$this, 'remove_script_version'],
@@ -52,14 +52,14 @@ class HooksGeneral {
         }
 
 		# HIDE WP UPDATE NOTICE FOR NON-ADMINS
-		if( ADTW()->getop('wpblock_update_wp') ){
+		if( ADTW()->getOption('wpblock_update_wp') ){
 			add_action( 
                 'admin_init', 
                 [$this, 'hide_wp_update_nag'] 
             );
         }
 		# HIDE WP UPDATE NOTICE
-		if( ADTW()->getop('wpblock_update_wp_all') ) {
+		if( ADTW()->getOption('wpblock_update_wp_all') ) {
 			add_action( 
                 'admin_init', 
                 [$this, 'hide_wp_update_nag_all'] 
@@ -67,7 +67,7 @@ class HooksGeneral {
         }
 
 		# REDIRECT FROM UPDATED SCREEN
-		if( ADTW()->getop('wpblock_update_screen') ) {
+		if( ADTW()->getOption('wpblock_update_screen') ) {
 			add_action( 
                 'load-about.php', 
                 [$this, 'redirect_update_screen'] 
@@ -75,7 +75,7 @@ class HooksGeneral {
         }
 
 		// ADMIN NOTICES
-		if( ADTW()->getop('wpseo_blog_public_enable') ) {
+		if( ADTW()->getOption('wpseo_blog_public_enable') ) {
 			add_action( 
                 'admin_notices', 
                 [$this, 'blogPublicNotice'], 
@@ -84,7 +84,7 @@ class HooksGeneral {
         }
 
 		# DISABLE SELF PING
-		if( ADTW()->getop('wpdisable_selfping') ) {
+		if( ADTW()->getOption('wpdisable_selfping') ) {
 			add_action( 
                 'pre_ping', 
                 [$this, 'no_self_ping'] 
@@ -92,7 +92,7 @@ class HooksGeneral {
         }
 
 		# REDIRET HOME ON ACCESS DENIED
-		if( ADTW()->getop('wpdisable_redirect_disallow') ) {
+		if( ADTW()->getOption('wpdisable_redirect_disallow') ) {
 			add_action( 
                 'admin_page_access_denied',  
                 [$this, 'access_denied'] 
@@ -100,7 +100,7 @@ class HooksGeneral {
         }
 
 		# ADD ID AND POST COUNT TO TAXONOMIES
-		if( ADTW()->getop('wptaxonomy_columns') ) {
+		if( ADTW()->getOption('wptaxonomy_columns') ) {
 			add_action( 
                 'admin_init', 
                 [$this, 'tax_ids_make'] 
@@ -108,8 +108,8 @@ class HooksGeneral {
         }
 
 		# DELAY RSS PUBLISH UPDATE
-		if( ADTW()->getop('wprss_delay_publish_enable') 
-			&& ADTW()->getop('wprss_delay_publish_time') ) 
+		if( ADTW()->getOption('wprss_delay_publish_enable') 
+			&& ADTW()->getOption('wprss_delay_publish_time') ) 
         {
             add_filter( 
                 'posts_where', 
@@ -119,7 +119,7 @@ class HooksGeneral {
 		
 
 		# HIDE UPDATE BUBLE IN DASHBOARD MENU
-		if( ADTW()->getop('wpblock_update_wp_all')) {
+		if( ADTW()->getOption('wpblock_update_wp_all')) {
 			add_action( 
                 'admin_menu', 
                 [$this, 'hide_update_bubble'] 
@@ -127,31 +127,31 @@ class HooksGeneral {
         }
 
 		# REMOVE SMART QUOTES
-		if( ADTW()->getop('wpdisable_texturize_all') ) {
+		if( ADTW()->getOption('wpdisable_texturize_all') ) {
             add_filter( 
                 'run_wptexturize', 
                 '__return_false' 
             );
         }
-		if( ADTW()->getop('wpdisable_texturize_some') 
-            and ADTW()->getop('wpdisable_texturize_all') === false ) 
+		if( ADTW()->getOption('wpdisable_texturize_some') 
+            and ADTW()->getOption('wpdisable_texturize_all') === false ) 
         {
-            $all = ADTW()->getop('wpdisable_texturize_some');
+            $all = ADTW()->getOption('wpdisable_texturize_some');
             foreach ($all as $tex) {
                 remove_filter( $tex, 'wptexturize' );
             }
 		}
         
 		# REMOVE AUTO P
-		if( ADTW()->getop('wpdisable_autop') ) {
-            $all = ADTW()->getop('wpdisable_autop');
+		if( ADTW()->getOption('wpdisable_autop') ) {
+            $all = ADTW()->getOption('wpdisable_autop');
             foreach ($all as $autop) {
                 remove_filter( $autop, 'wpautop' );
             }
         }
 
 		# REMOVE WP FROM TITLE
-		if( ADTW()->getop('wpdisable_wptitle') ) {
+		if( ADTW()->getOption('wpdisable_wptitle') ) {
 			add_filter( 
                 'admin_title', 
                 [$this, 'remove_admin_title'], 
@@ -160,7 +160,7 @@ class HooksGeneral {
         }
 
 		# DISABLE GUTENBERG
-		if( ADTW()->getop('wpdisable_gutenberg') ) {
+		if( ADTW()->getOption('wpdisable_gutenberg') ) {
 			add_filter(
                 'use_block_editor_for_post_type', 
                 [$this, 'disable_gutenberg'], 
@@ -169,7 +169,7 @@ class HooksGeneral {
         }
 
 		# DISABLE DISTRACTION FREE
-		if( ADTW()->getop('wpdisable_distraction') ) {
+		if( ADTW()->getOption('wpdisable_distraction') ) {
 			add_action(
                 'enqueue_block_editor_assets', 
                 [$this, 'disable_distraction']
@@ -187,9 +187,9 @@ class HooksGeneral {
 	 * @return string
 	 */
 	public function remove_wp_version( $generated ) {
-		if( ADTW()->getop('wpdisable_version_full') )
+		if( ADTW()->getOption('wpdisable_version_full') )
 			return '';
-		elseif( ADTW()->getop('wpdisable_version_number') )
+		elseif( ADTW()->getOption('wpdisable_version_number') )
 			return '<meta name="generator" content="WordPress" />';
 
 		return $generated;
@@ -332,9 +332,9 @@ class HooksGeneral {
 		global $wpdb;
 		if( is_feed() ) {
 			$now	 = gmdate( 'Y-m-d H:i:s' );
-			$wait	 = ADTW()->getop('wprss_delay_publish_time'); // integer
+			$wait	 = ADTW()->getOption('wprss_delay_publish_time'); // integer
 			// https://dev.mysql.com/doc/refman/5.0/en/date-and-time-public functions.html#public function_timestampdiff
-			$device	 = ADTW()->getop('wprss_delay_publish_period'); // MINUTE, HOUR, DAY, WEEK, MONTH, YEAR
+			$device	 = ADTW()->getOption('wprss_delay_publish_period'); // MINUTE, HOUR, DAY, WEEK, MONTH, YEAR
 			// add SQL-syntax to default $where
 			$where .= " AND TIMESTAMPDIFF($device, $wpdb->posts.post_date_gmt, '$now') > $wait ";
 		}
@@ -428,13 +428,13 @@ class HooksGeneral {
      * 
      */
     public function disable_gutenberg($current_status, $post_type) {
-        if (in_array($post_type, ADTW()->getop('wpdisable_gutenberg'))) return false;
+        if (in_array($post_type, ADTW()->getOption('wpdisable_gutenberg'))) return false;
         return $current_status;
     }
 
     public function disable_distraction() {
 		global $post;
-        if (!in_array($post->post_type, ADTW()->getop('wpdisable_distraction'))) {
+        if (!in_array($post->post_type, ADTW()->getOption('wpdisable_distraction'))) {
 			return;
 		}
         

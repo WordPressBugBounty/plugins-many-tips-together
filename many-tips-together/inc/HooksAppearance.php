@@ -17,7 +17,7 @@ class HooksAppearance {
 	public function __construct() {
 
         // HELP TAB
-		if( ADTW()->getop('appearance_hide_help_tab') ) {
+		if( ADTW()->getOption('appearance_hide_help_tab') ) {
             add_action( 
                 'admin_head', 
                 [$this, 'adminHead'], 
@@ -25,7 +25,7 @@ class HooksAppearance {
             );
         }
 		// SCREEN TAB
-		if( ADTW()->getop('appearance_hide_screen_options_tab') ) {
+		if( ADTW()->getOption('appearance_hide_screen_options_tab') ) {
             add_filter( 
                 'screen_options_show_screen', 
                 '__return_false'
@@ -33,8 +33,8 @@ class HooksAppearance {
         }
         
         // DASHBOARD HELP TEXTS
-		if ( ADTW()->getop('appearance_help_texts_enable') ) {
-            $roles = ADTW()->getop('appearance_help_texts_roles');
+		if ( ADTW()->getOption('appearance_help_texts_enable') ) {
+            $roles = ADTW()->getOption('appearance_help_texts_roles');
 			$ucan = empty($roles) 
                     ? true 
 					: ADTW()->current_user_has_role_array($roles);
@@ -48,8 +48,8 @@ class HooksAppearance {
 		}
 
 		// ADMIN NOTICES
-		if( ADTW()->getop('admin_notice_header_settings_enable') 
-            || ADTW()->getop('admin_notice_header_allpages_enable') ) {
+		if( ADTW()->getOption('admin_notice_header_settings_enable') 
+            || ADTW()->getOption('admin_notice_header_allpages_enable') ) {
 			add_action( 
                 'admin_notices', 
                 [$this, 'adminNotices'], 
@@ -58,7 +58,7 @@ class HooksAppearance {
         }
 
         // FOOTER HIDE
-        if ( ADTW()->getop('admin_notice_footer_hide') ) {
+        if ( ADTW()->getOption('admin_notice_footer_hide') ) {
             add_filter( 
                 'admin_print_styles', 
                 [$this, 'footerHide'] 
@@ -66,7 +66,7 @@ class HooksAppearance {
         }
 
 		// FOOTER MESSAGES
-		if( !ADTW()->getop('admin_notice_footer_hide') && ADTW()->getop('admin_notice_footer_message_enable') ) {
+		if( !ADTW()->getOption('admin_notice_footer_hide') && ADTW()->getOption('admin_notice_footer_message_enable') ) {
 			add_filter( 
                 'admin_footer_text', 
                 [$this, 'footerLeft'], 
@@ -80,7 +80,7 @@ class HooksAppearance {
 		}    
 
 		// GLOBAL CSS
-		if ( ADTW()->getop('admin_global_css') && trim(ADTW()->getop('admin_global_css')) !== '' ) {
+		if ( ADTW()->getOption('admin_global_css') && trim(ADTW()->getOption('admin_global_css')) !== '' ) {
 			add_action( 
                 'admin_head', 
                 [$this, 'adminCSS'] 

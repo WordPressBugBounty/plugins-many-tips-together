@@ -8,7 +8,7 @@ class AdminTweaks {
     /**
      * Plugin current version
      */
-    const VERSION = "3.3";
+    const VERSION = "3.3.1";
 
     /**
      * Plugin name
@@ -47,7 +47,7 @@ class AdminTweaks {
     public function loaded() 
     {
         /* Workaround for translations not loading on the plugin page */
-        if ( isset($_GET['page']) && 'admintweaks' == $_GET['page'] ) {
+        if ( isset($_GET['page']) && 'admintweaks' == sanitize_text_field($_GET['page']) ) {
             $this->load_textdomain(true);
         }
         
@@ -82,8 +82,6 @@ class AdminTweaks {
 	 */
 	public function load_textdomain($plugin_page=false) 
     {
-        do_action('qm/debug',print_r(['LOAD DOMAIN',$plugin_page?'plugin_page':'not plugin_page'],true));
-
         $domain = 'mtt';
         $plugin_rel_path = ADTW_SLUG.'/languages';
         load_plugin_textdomain($domain, false, $plugin_rel_path);
@@ -100,7 +98,7 @@ class AdminTweaks {
      * @param string $key
      * @return boolean:string:array:object
      */
-    public function getop( string $key ) {
+    public function getOption( string $key ) {
         $result = !empty($this->ops[$key]) ? $this->ops[$key] : false;
         return $result;
     }
@@ -113,11 +111,11 @@ class AdminTweaks {
      *
      * @return array
      */
-    public function setSupport() {
+    public function updateSupportData() {
         global $adtw_option, $admin_page_hooks;
         $opt = "$adtw_option-support";
         $support = get_option($opt, array());
-        $support['current_menus'] = $this->_buildMenus();
+        $support['current_menus'] = $this->_buildMenuData();
         $support['current_submenus'] = $this->_buildSubMenus();
         $support['current_cpts'] = $this->_buildCPTs();
         $support['current_status'] = $this->_buildStatus();
@@ -342,7 +340,7 @@ class AdminTweaks {
      *
      * @return void
      */
-    private function _buildMenus() {
+    private function _buildMenuData() {
         global $menu;
         $default_menus = [
             'index.php', 
@@ -415,7 +413,11 @@ class AdminTweaks {
     }
 
     public function makeTipCredit($name, $url) {
-        return "<a href='$url' target='_blank'>$name</a>";
+        return sprintf(
+            '<a href="%s" target="_blank">%s</a>',
+            esc_url($url),
+            esc_html($name)
+        );
     }
 
    	/**

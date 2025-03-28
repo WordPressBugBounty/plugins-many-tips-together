@@ -16,7 +16,7 @@ class HooksListings {
 	 */
 	public function __construct() {
 		# CATEGORY COUNT
-		if( ADTW()->getop('listings_enable_category_count') ) {
+		if( ADTW()->getOption('listings_enable_category_count') ) {
 			add_action( 
                 'load-edit.php', 
                 [$this, 'categoryCountLoad'] 
@@ -24,7 +24,7 @@ class HooksListings {
         }
 
 		# MAKE DUPLICATE AND DELETE REVISIONS
-		if( ADTW()->getop('listings_duplicate_del_revisions') ) {
+		if( ADTW()->getOption('listings_duplicate_del_revisions') ) {
 			add_action(
                 'admin_init', 
                 ['\ADTW\HooksListingDupesAndRevs', 'init']
@@ -32,7 +32,7 @@ class HooksListings {
 		}
         
 		# ADD ID COLUMN
-		if( ADTW()->getop('listings_enable_id_column') ) {
+		if( ADTW()->getOption('listings_enable_id_column') ) {
             add_action( 
                 'admin_init', 
                 [$this, 'initIDColumn'], 
@@ -41,7 +41,7 @@ class HooksListings {
         }
 
 		# ADD THUMBNAIL COLUMN
-		if( ADTW()->getop('listings_enable_thumb_column') ) {
+		if( ADTW()->getOption('listings_enable_thumb_column') ) {
 			add_action( 
                 'admin_init', 
                 [$this, 'initThumbColumn'], 
@@ -58,7 +58,7 @@ class HooksListings {
         }
 		
 		# ADD REMOVE ROW ACTIONS SCREEN OPTION
-		if( ADTW()->getop('listings_remove_row_actions_everywhere') ) {
+		if( ADTW()->getOption('listings_remove_row_actions_everywhere') ) {
 			add_action(
                 'init', 
                 [$this, 'initRowActions'],
@@ -77,7 +77,7 @@ class HooksListings {
 		}
 
 		# EMPTY TRASH
-		if( ADTW()->getop('listings_empty_trash_button') ) {
+		if( ADTW()->getOption('listings_empty_trash_button') ) {
             $cpts = ADTW()->getCPTs();
             foreach ($cpts as $hook) {
                 add_filter(
@@ -313,8 +313,8 @@ class HooksListings {
 	 */
 	public function thumbColumnDisplay( $column_name, $post_id ) {
 		$width = $height = 
-                ADTW()->getop('listings_enable_thumb_proportion')['width'] != 'px' 
-				? str_replace('px', '', ADTW()->getop('listings_enable_thumb_proportion')['width'])
+                ADTW()->getOption('listings_enable_thumb_proportion')['width'] != 'px' 
+				? str_replace('px', '', ADTW()->getOption('listings_enable_thumb_proportion')['width'])
                 : '50';
 
 		if( 'thumbnail' == $column_name ) {
@@ -331,7 +331,7 @@ class HooksListings {
 			);
 			$count = '';
 			// Show only if option is set
-			if( $attachments && count($attachments)>1 && ADTW()->getop('listings_enable_thumb_count') )
+			if( $attachments && count($attachments)>1 && ADTW()->getOption('listings_enable_thumb_count') )
 				$count = '<br><small>total: '. count($attachments) . '</small>';
 			if( $thumbnail_id ) {
 				$thumb = sprintf(
@@ -364,71 +364,71 @@ class HooksListings {
 	 */
 	public function printCSS() {
 		$output = '';
-		if( ADTW()->getop('listings_enable_id_column') ) {
+		if( ADTW()->getOption('listings_enable_id_column') ) {
 			$output .= "\t" . '.column-id{width:5%} ' . "\r\n";
         }
 
-		if( ADTW()->getop('listings_enable_thumb_column') ) {
+		if( ADTW()->getOption('listings_enable_thumb_column') ) {
             if (
-                !empty(ADTW()->getop('listings_enable_thumb_width')['width'])
-                && ADTW()->getop('listings_enable_thumb_width')['width'] != ADTW()->getop('listings_enable_thumb_width')['units']
+                !empty(ADTW()->getOption('listings_enable_thumb_width')['width'])
+                && ADTW()->getOption('listings_enable_thumb_width')['width'] != ADTW()->getOption('listings_enable_thumb_width')['units']
                 ) {
                 $output .= sprintf(
                     "\t.column-thumbnail {width: %s !important}  \r\n",
-                    ADTW()->getop('listings_enable_thumb_width')['width']
+                    ADTW()->getOption('listings_enable_thumb_width')['width']
                 );
                 
             }
         }
 
         /** upload.php table css acts different than the rest, this width bugs it all */
-		if( ADTW()->getop('listings_title_column_width') ){
-            if (ADTW()->getop('listings_title_column_width')['width'] != 0) {
+		if( ADTW()->getOption('listings_title_column_width') ){
+            if (ADTW()->getOption('listings_title_column_width')['width'] != 0) {
                 $output .= sprintf(
                     "\t.column-title {width: %s} \r\n",
-                    ADTW()->getop('listings_title_column_width')['width'] 
+                    ADTW()->getOption('listings_title_column_width')['width'] 
                 );
             }
         }
 
-		if( ADTW()->getop('listings_enable_thumb_column') ){
+		if( ADTW()->getOption('listings_enable_thumb_column') ){
 			$output .= "\t.column-thumbnail {width: 180px} \r\n";
         }
 
-        if( ADTW()->getop('listings_status_draft') ) {
+        if( ADTW()->getOption('listings_status_draft') ) {
 			$output .= sprintf(
                 "\t.status-draft {background: %s !important} \r\n", 
-				ADTW()->getop('listings_status_draft')
+				ADTW()->getOption('listings_status_draft')
             );
         }
-        if( ADTW()->getop('listings_status_pending') ) {
+        if( ADTW()->getOption('listings_status_pending') ) {
 			$output .= sprintf(
                 "\t.status-pending {background: %s !important} \r\n", 
-				ADTW()->getop('listings_status_pending')
+				ADTW()->getOption('listings_status_pending')
             );
         }
-        if( ADTW()->getop('listings_status_future') ) {
+        if( ADTW()->getOption('listings_status_future') ) {
 			$output .= sprintf(
                 "\t.status-future {background: %s !important} \r\n", 
-				ADTW()->getop('listings_status_future')
+				ADTW()->getOption('listings_status_future')
             );
         }
-        if( ADTW()->getop('listings_status_private') ) {
+        if( ADTW()->getOption('listings_status_private') ) {
 			$output .= sprintf(
                 "\t.status-private {background: %s !important} \r\n", 
-				ADTW()->getop('listings_status_private')
+				ADTW()->getOption('listings_status_private')
             );
         }
-        if( ADTW()->getop('listings_status_password') ) {
+        if( ADTW()->getOption('listings_status_password') ) {
 			$output .= sprintf(
                 "\t.post-password-required {background: %s !important} \r\n", 
-				ADTW()->getop('listings_status_password')
+				ADTW()->getOption('listings_status_password')
             );
         }
-        if( ADTW()->getop('listings_status_others') ) {
+        if( ADTW()->getOption('listings_status_others') ) {
 			$output .= sprintf(
                 "\t.author-other {background: %s !important} \r\n", 
-				ADTW()->getop('listings_status_others')
+				ADTW()->getOption('listings_status_others')
             );
         }
 

@@ -19,8 +19,8 @@ class HooksDashboard {
 	public function __construct() {
 
         # REMOVE WELCOME 
-		$welcome = ADTW()->getop('dashboard_remove') 
-				? in_array( 'welcome', ADTW()->getop('dashboard_remove') ) 
+		$welcome = ADTW()->getOption('dashboard_remove') 
+				? in_array( 'welcome', ADTW()->getOption('dashboard_remove') ) 
 				: false;
 		if( $welcome ){
 			add_action( 
@@ -30,7 +30,7 @@ class HooksDashboard {
         }
 
         # REMOVE OTHER WIDGETS
-        if( ADTW()->getop('dashboard_remove') ) {
+        if( ADTW()->getOption('dashboard_remove') ) {
             add_action( 
                 'wp_dashboard_setup', 
                 [$this, 'removeWidgets'], 
@@ -39,14 +39,14 @@ class HooksDashboard {
 		}
         
         # WIDGET FOLDER SIZE
-        if( ADTW()->getop('dashboard_folder_size') 
+        if( ADTW()->getOption('dashboard_folder_size') 
             and current_user_can( 'install_plugins' ) ) 
         {
-            HooksDashboardWidgets::init( ADTW()->getop('dashboard_folder_size') );
+            HooksDashboardWidgets::init( ADTW()->getOption('dashboard_folder_size') );
         }
         
         # ADD WIDGETS
-		if( ADTW()->getop('dashboard_add_widgets') && ADTW()->getop('dashboard_custom_widgets_enable') ) {
+		if( ADTW()->getOption('dashboard_add_widgets') && ADTW()->getOption('dashboard_custom_widgets_enable') ) {
 			add_action( 
                 'wp_dashboard_setup', 
                 [$this, 'addWidgets'], 
@@ -80,7 +80,7 @@ class HooksDashboard {
             'site_health' => 'normal',                 
         ];
         foreach( $base as $mb => $place ) {
-            if( in_array( $mb, ADTW()->getop('dashboard_remove') ) ) {
+            if( in_array( $mb, ADTW()->getOption('dashboard_remove') ) ) {
                 remove_meta_box( "dashboard_$mb", 'dashboard', $place );
             }
         }
@@ -88,9 +88,9 @@ class HooksDashboard {
 	
 	public function addWidgets() {	
         $i = 0;
-        $enabled = ADTW()->getop('dashboard_custom_widgets_enable');
-        $titles   = ADTW()->getop('dashboard_custom_widgets_title');
-        $roles   = ADTW()->getop('dashboard_custom_widgets_roles');
+        $enabled = ADTW()->getOption('dashboard_custom_widgets_enable');
+        $titles   = ADTW()->getOption('dashboard_custom_widgets_title');
+        $roles   = ADTW()->getOption('dashboard_custom_widgets_roles');
         
 		foreach( $titles as $k => $v ) {
             $ucan = 
@@ -113,7 +113,7 @@ class HooksDashboard {
 
 	public function addDashboardContent( $object, $box ) {
 		$id = str_replace('mtt_widget_', '', $box['id'] );
-        $content = ADTW()->getop('dashboard_custom_widgets_content');
+        $content = ADTW()->getOption('dashboard_custom_widgets_content');
 		echo do_shortcode( stripslashes( $content[$id] ) );
 	}
 }

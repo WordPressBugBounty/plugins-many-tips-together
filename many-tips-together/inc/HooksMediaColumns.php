@@ -15,7 +15,7 @@ class HooksMediaColumns {
 	 */
 	public function __construct() {
 		// COLUMN ID
-		if( ADTW()->getop('media_image_id_column_enable') ) {
+		if( ADTW()->getOption('media_image_id_column_enable') ) {
 			add_filter(
                 'manage_upload_columns', 
                 [$this, 'idColumnDefine']
@@ -32,7 +32,7 @@ class HooksMediaColumns {
 		}
 
 		// COLUMN IMAGE SIZE
-		if( ADTW()->getop('media_image_size_column_enable') ) {
+		if( ADTW()->getOption('media_image_size_column_enable') ) {
 			add_filter(
                 'manage_upload_columns', 
                 [$this, 'sizeColumnDefine']
@@ -49,7 +49,7 @@ class HooksMediaColumns {
 		}
 
 		// COLUMN LIST OF THUMBNAILS
-		if( ADTW()->getop('media_image_thubms_list_column_enable') ) {
+		if( ADTW()->getOption('media_image_thubms_list_column_enable') ) {
 			add_filter(
                 'manage_upload_columns', 
                 [$this, 'all_thumbs_column_define']

@@ -17,7 +17,7 @@ class HooksPluginsExtras {
 	public function __construct() 
     {
         # NOTIFICATION CENTER: RENAME ADMINBAR 
-		if( ADTW()->getop('plugins_notices_rename') ) 
+		if( ADTW()->getOption('plugins_notices_rename') ) 
         {
             add_action( 
                 'wp_after_admin_bar_render', 
@@ -26,7 +26,7 @@ class HooksPluginsExtras {
         }
         
         # NOTIFICATION CENTER: MOVE MENU 
-		if( ADTW()->getop('plugins_hide_notices') ) 
+		if( ADTW()->getOption('plugins_hide_notices') ) 
         {
             add_action( 
                 'admin_menu', 
@@ -39,7 +39,7 @@ class HooksPluginsExtras {
             );
         }
         # ACF: MOVE MENU 
-		if( ADTW()->getop('plugins_acf_move_menu') ) 
+		if( ADTW()->getOption('plugins_acf_move_menu') ) 
         {
             add_action( 
                 'admin_menu', 
@@ -56,7 +56,7 @@ class HooksPluginsExtras {
         }
 
         # SNIPPETS: FILTER BY 
-		if( ADTW()->getop('plugins_snippets_filter') ) {
+		if( ADTW()->getOption('plugins_snippets_filter') ) {
             add_action( 
                 'admin_print_footer_scripts-toplevel_page_snippets', 
                 [$this, 'printSnippetsScripts']
@@ -64,7 +64,7 @@ class HooksPluginsExtras {
         }
 
         # SNIPPETS: MOVE MENU 
-		if( ADTW()->getop('plugins_snippets_move_menu') 
+		if( ADTW()->getOption('plugins_snippets_move_menu') 
             && !is_network_admin() ) 
         {
             add_action( 
@@ -110,7 +110,7 @@ class HooksPluginsExtras {
         }
 
         # SEO: MOVE MENU 
-		if( ADTW()->getop('plugins_seo_move_menu') ) 
+		if( ADTW()->getOption('plugins_seo_move_menu') ) 
         {
             add_action( 
                 'admin_menu', 
@@ -213,8 +213,8 @@ class HooksPluginsExtras {
 
     public function changeNoticesName() 
     {
-        $text = ADTW()->getop('plugins_notices_rename_text')
-            ? ADTW()->getop('plugins_notices_rename_text')
+        $text = ADTW()->getOption('plugins_notices_rename_text')
+            ? ADTW()->getOption('plugins_notices_rename_text')
             : 'Notices';
         ?>
         <script type="text/javascript">

@@ -55,6 +55,21 @@ jQuery(document).ready( $=>
         return str.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toLowerCase();
     };
 
+    function daFilterByKeyword_NEW(e) {
+        // Escape special characters in the keyword
+        const escapedKeyword = e.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+        const regex = new RegExp(escapedKeyword, 'i'); // 'i' for case-insensitive search
+    
+        $('tbody#the-list tr').hide().filter((i, v) => {
+            let titleText = $(v).find('td.plugin-title').text();
+            let descriptionText = $(v).find('td.column-description').text();
+            let combinedText = titleText + ' ' + descriptionText;
+            console.log(combinedText);
+            return regex.test(combinedText);
+        }).show();
+        updtTotals();
+    }
+
     const daFilterByKeyword = e => {
         var regex = new RegExp('((.|\\n)*)' + e); // stackoverflow.com/a/159140
         
