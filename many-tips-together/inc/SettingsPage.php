@@ -162,12 +162,11 @@ class SettingsPage {
 
     public static function add_panel_css() 
     {
-        $css = '/assets/adtw.css';
         wp_register_style(
             'redux-custom-css',
-            ADTW_URL . $css,
+            ADTW_URL . '/assets/adtw.css',
             [ 'redux-admin-css' ], 
-            ADTW()->cache($css),
+            ADTW()->cache('adtw.css'),
             'all'
         );  
         wp_enqueue_style('redux-custom-css');
@@ -184,12 +183,11 @@ class SettingsPage {
      */
     public static function add_panel_js() 
     {
-        $js = '/assets/adtw.js';
         wp_register_script(
             'redux-custom-js',
-            ADTW_URL . $js,
+            ADTW_URL . '/assets/adtw.js',
             [ 'jquery' ], 
-            ADTW()->cache($js)
+            ADTW()->cache('adtw.js')
         );  
         wp_enqueue_script('redux-custom-js');
         wp_localize_script( 'redux-custom-js', "adtw_obj", array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );

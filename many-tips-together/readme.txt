@@ -3,7 +3,7 @@ Contributors: brasofilo
 Tags: customize, admin interface, profile, login, maintenance mode
 Requires at least: 5.0
 Tested up to: 6.7.1
-Stable tag: 3.3.1
+Stable tag: 3.3.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -65,7 +65,7 @@ Don't hesitate in posting a new topic here in [WordPress support forum](https://
 
 == Changelog ==
 
-**Version 3.3.1**
+**Version 3.3.2**
 
 * Bug fixes
 

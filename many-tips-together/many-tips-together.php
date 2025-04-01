@@ -3,7 +3,7 @@
  * Plugin Name: Admin Tweaks
  * Plugin URI: https://wordpress.org/plugins/many-tips-together
  * Description: Tweak, style, remove and modify several aspects of your WordPress administrative interface.
- * Version: 3.3.1
+ * Version: 3.3.2
  * Author: Rodolfo Buaiz
  * Author URI: https://brasofilo.com/
  * Text Domain: mtt

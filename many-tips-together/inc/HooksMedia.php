@@ -185,7 +185,7 @@ class HooksMedia {
 			return;
 		
 		$meta = get_post_meta( $post_id, '_wp_attachment_metadata', true );
-		$return = array();
+		$return = [];
 		
 		if( wp_attachment_is( 'image', $post_id ) ) {
 			$default_exif = array( 'title', 'camera', 'aperture', 'focal_length', 'iso', 'shutter_speed', 'caption', 'credit', 'copyright', 'created_timestamp' );

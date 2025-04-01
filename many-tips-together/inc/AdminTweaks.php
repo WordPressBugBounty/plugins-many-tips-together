@@ -8,7 +8,7 @@ class AdminTweaks {
     /**
      * Plugin current version
      */
-    const VERSION = "3.3.1";
+    const VERSION = "3.3.2";
 
     /**
      * Plugin name
@@ -57,7 +57,7 @@ class AdminTweaks {
         if (file_exists(ADTW_PATH . '/inc/config.php')) {
             require_once (ADTW_PATH . '/inc/config.php');
         }
-        $this->ops = get_option( $adtw_option, array() );
+        $this->ops = get_option( $adtw_option, [] );
 
         SettingsPage::init();
         new HooksAdminBar();
@@ -114,7 +114,7 @@ class AdminTweaks {
     public function updateSupportData() {
         global $adtw_option, $admin_page_hooks;
         $opt = "$adtw_option-support";
-        $support = get_option($opt, array());
+        $support = get_option($opt, []);
         $support['current_menus'] = $this->_buildMenuData();
         $support['current_submenus'] = $this->_buildSubMenus();
         $support['current_cpts'] = $this->_buildCPTs();
@@ -135,7 +135,7 @@ class AdminTweaks {
     public function setSupportBar($bar) {
         global $adtw_option;
         $opt = "$adtw_option-support";
-        $support = get_option($opt, array());
+        $support = get_option($opt, []);
         $support['current_adminbar'] = $this->_buildAdminbar($bar);
         update_option($opt, $support);
     }
@@ -149,7 +149,7 @@ class AdminTweaks {
      */
     public function getSnippetsSlug() {
         global $adtw_option;
-        $support = get_option("$adtw_option-support", array());
+        $support = get_option("$adtw_option-support", []);
         $current = isset($support['current_snippets_name']) ? $support['current_snippets_name'] : 'snippets';
         return $current;
     }
@@ -161,7 +161,7 @@ class AdminTweaks {
      */
     public function getMenus() {
         global $adtw_option;
-        $support = get_option("$adtw_option-support", array());
+        $support = get_option("$adtw_option-support", []);
         $current = isset($support['current_menus']) ? $support['current_menus'] : [];
         return $current;
     }
@@ -173,7 +173,7 @@ class AdminTweaks {
      */
     public function getCPTs() {
         global $adtw_option;
-        $support = get_option("$adtw_option-support", array());
+        $support = get_option("$adtw_option-support", []);
         $current = isset($support['current_cpts']) ? $support['current_cpts'] : [];
         return $current;
     }
@@ -185,7 +185,7 @@ class AdminTweaks {
      */
     public function getStatus() {
         global $adtw_option;
-        $support = get_option("$adtw_option-support", array());
+        $support = get_option("$adtw_option-support", []);
         $current = isset($support['current_status']) ? $support['current_status'] : [];
         return $current;
     }
@@ -199,7 +199,7 @@ class AdminTweaks {
      */
     public function getAdminBar() {
         global $adtw_option;
-        $support = get_option("$adtw_option-support", array());
+        $support = get_option("$adtw_option-support", []);
         $current = isset($support['current_adminbar']) ? $support['current_adminbar'] : [];
         if ( isset($current['adtw-site-name']) ) {
             unset($current['adtw-site-name']);
@@ -288,7 +288,7 @@ class AdminTweaks {
      * @return int|bool
      */
     public function cache($file) {
-        $path = ADTW_PATH.$file;
+        $path = ADTW_PATH.'/assets/'.$file;
         $fmtime = filemtime ($path);
 
         return $fmtime ? $fmtime : false;

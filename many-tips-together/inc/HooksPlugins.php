@@ -82,30 +82,123 @@ class HooksPlugins {
 	 * CSS and JS for Filter By
 	 */
 	public function printFilterPlugins() {
+        $assets = ADTW_URL . '/assets';
 		wp_register_style( 
 				'mtt-filterby', 
-				ADTW_URL . '/assets/filter-listings.css', 
-				array(), 
-				ADTW()->cache('/assets/filter-listings.css')  
+				"$assets/filter-listings.css", 
+				[], 
+				ADTW()->cache('filter-listings.css')  
+		);
+		wp_register_script( 
+				'mtt-filters', 
+				"$assets/filters-common.js", 
+				[], 
+				ADTW()->cache('filters-common.js')
 		);
 		wp_register_script( 
 				'mtt-filterby', 
-				ADTW_URL . '/assets/filter-plugins.js', 
-				array(), 
-				ADTW()->cache('/assets/filter-plugins.js')  
+				"$assets/filter-plugins.js", 
+				['mtt-filters', 'jquery'], 
+				ADTW()->cache('filter-plugins.js')  
 		);
 		wp_enqueue_style( 'mtt-filterby' );
 		wp_enqueue_script( 'mtt-filterby' );
+
         wp_add_inline_script( 
             'mtt-filterby', 
             'const ADTW = ' . json_encode([
                 'html' => $this->_filtersHtml(),
+                'plugin_users' => ADTW()->getOption('plugins_my_plugins_names')
             ]), 
             'before' 
         );
 	}
 
     private function _filtersHtml()
+    {
+        $strings = [
+            'icon_title'         => 'by ' . AdminTweaks::NAME,
+            'desc_show'          => esc_html__('Show descriptions', 'mtt'),
+            'desc_hide'          => esc_html__('Hide descriptions', 'mtt'),
+            'desc_label'         => esc_html__('Description', 'mtt'),
+            'show_all'           => esc_html__('Show all', 'mtt'),
+            'active_show'        => esc_html__('Show active', 'mtt'),
+            'active_label'       => esc_html__('Active', 'mtt'),
+            'inactive_show'      => esc_html__('Show inactive', 'mtt'),
+            'inactive_label'     => esc_html__('Inactive', 'mtt'),
+            'filter_placeholder' => esc_html__('filter by keyword', 'mtt'),
+            'filter_title'       => esc_html__('enter a string to filter the list', 'mtt'),
+            'mine_show'          => esc_html__('Show mine', 'mtt'),
+            'mine_label'         => esc_html__('Mine', 'mtt'),
+        ];
+
+        // Build the mine button conditionally
+        $mine_button = '';
+        if ( !empty(ADTW()->getOption('plugins_my_plugins_bg_color')) && !empty(ADTW()->getOption('plugins_my_plugins_names')) ) {
+            $mine_button = sprintf(
+                '<button id="hide-mine" class="button b5f-button b5f-btn-status" 
+                    title="%1$s" 
+                    data-title-hide="%2$s" 
+                    data-title-show="%1$s">
+                %3$s</button>',
+                $strings['mine_show'],
+                $strings['show_all'],
+                $strings['mine_label']
+            );
+        }
+
+        return sprintf(
+            '<div class="mysearch-wrapper">
+                <span class="dashicons dashicons-image-filter b5f-icon" title="%1$s"></span> 
+                
+                <!-- Description Toggle -->
+                <button id="hide-desc" class="button b5f-button" 
+                    title="%2$s" 
+                    data-title-hide="%2$s" 
+                    data-title-show="%3$s">
+                    %4$s
+                </button> 
+                
+                <!-- Status Filters -->
+                <button id="hide-active" class="button b5f-button b5f-btn-status" 
+                    title="%5$s" 
+                    data-title-hide="%6$s" 
+                    data-title-show="%5$s">
+                    %7$s
+                </button> 
+                
+                <button id="hide-inactive" class="button b5f-button b5f-btn-status" 
+                    title="%8$s" 
+                    data-title-hide="%6$s" 
+                    data-title-show="%8$s">
+                    %9$s
+                </button>
+                
+                %10$s
+                
+                <!-- Search Box -->
+                <input type="text" id="b5f-plugins-filter" class="mysearch-box" 
+                    name="focus" value="" placeholder="%11$s" 
+                    title="%12$s" />
+                <button class="close-icon" type="reset"></button>
+            </div>',
+            // Parameters
+            $strings['icon_title'],          // 1
+            $strings['desc_show'],           // 2
+            $strings['desc_hide'],           // 3
+            $strings['desc_label'],          // 4
+            $strings['active_show'],         // 5
+            $strings['show_all'],            // 6
+            $strings['active_label'],        // 7
+            $strings['inactive_show'],       // 8
+            $strings['inactive_label'],      // 9
+            $mine_button,                    // 10
+            $strings['filter_placeholder'],  // 11
+            $strings['filter_title']         // 12
+        );
+    }
+
+    private function _filtersHtmlOLD()
     {
         return sprintf(
             '<div class="mysearch-wrapper">
@@ -127,6 +220,11 @@ class HooksPlugins {
                 data-title-hide="%5$s" 
                 data-title-show="%8$s">
             %9$s</button>
+            <button id="hide-mine" class="button b5f-button b5f-btn-status" 
+                title="%12$s" 
+                data-title-hide="%5$s" 
+                data-title-show="%12$s">
+            %13$s</button>
             <input type="text" id="b5f-plugins-filter" class="mysearch-box" 
                 name="focus" value="" placeholder="%10$s" 
                 title="%11$s" />
@@ -135,14 +233,16 @@ class HooksPlugins {
             'by '.AdminTweaks::NAME,                #1
             esc_html__('Show descriptions', 'mtt'), #2
             esc_html__('Hide descriptions', 'mtt'), #3
-            esc_html__('Description', 'mtt'),
+            esc_html__('Description', 'mtt'), #4
             esc_html__('Show all', 'mtt'), #5
             esc_html__('Show active', 'mtt'), #6
-            esc_html__('Active', 'mtt'),
+            esc_html__('Active', 'mtt'), #7
             esc_html__('Show inactive', 'mtt'), #9
-            esc_html__('Inactive', 'mtt'),
+            esc_html__('Inactive', 'mtt'), 
             esc_html__('filter by keyword', 'mtt'),
             esc_html__('enter a string to filter the list', 'mtt'),
+            esc_html__('Show mine', 'mtt'),
+            esc_html__('Mine', 'mtt'),
         );
     }
 
@@ -270,7 +370,7 @@ class HooksPlugins {
                     <?php if( $display_count ): ?>
                         // Display author count
                         var atual = $('.displaying-num').html();
-                        $('.displaying-num').html( atual+' : '+$("#the-list").children("<?php echo $jq_ok; ?>").length + ' ' + '<?php echo $by_author; ?>' );
+                        $('.displaying-num').html( atual+' : '+$("#the-list").find("<?php echo $jq_ok; ?>").length + ' ' + '<?php echo $by_author; ?>' );
                     <?php endif; ?>
                     
                     // Modify the plugin rows background

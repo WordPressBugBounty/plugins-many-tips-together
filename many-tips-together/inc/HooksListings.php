@@ -550,7 +550,7 @@ class HooksListings {
             'mtt-trash', 
             ADTW_URL . '/assets/trash.css', 
             [], 
-            ADTW()->cache('/assets/trash.css') 
+            ADTW()->cache('trash.css') 
 		);
 		wp_enqueue_style( 'mtt-trash' );
 	}

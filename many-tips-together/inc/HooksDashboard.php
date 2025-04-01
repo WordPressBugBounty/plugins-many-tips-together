@@ -8,7 +8,7 @@
 namespace ADTW;
 
 class HooksDashboard {
-	private $dashboard_widgets = array();
+	private $dashboard_widgets = [];
 
 	/**
 	 * Check options and dispatch hooks

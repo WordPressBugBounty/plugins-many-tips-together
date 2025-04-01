@@ -96,17 +96,24 @@ class HooksUsers {
             esc_html__('filter by user, email, role...', 'mtt'),
             esc_html__('enter a string to filter the list', 'mtt'),
         );
+        $assets = ADTW_URL . '/assets';
 		wp_register_style( 
 				'mtt-filterby', 
-				ADTW_URL . '/assets/filter-listings.css', 
+				"$assets/filter-listings.css", 
 				[], 
-				ADTW()->cache('/assets/filter-listings.css')  
+				ADTW()->cache('filter-listings.css')  
 		);
 		wp_register_script( 
+            'mtt-filters', 
+            "$assets/filters-common.js", 
+            [], 
+            ADTW()->cache('filters-common.js')
+        );
+        wp_register_script( 
 				'mtt-filterby-users', 
-				ADTW_URL . '/assets/filter-users.js', 
-				[], 
-				ADTW()->cache('/assets/filter-users.js')  
+				"$assets/filter-users.js", 
+				['mtt-filters', 'jquery'], 
+				ADTW()->cache('filter-users.js')  
 		);
 		wp_enqueue_style( 'mtt-filterby' );
 		wp_enqueue_script( 'mtt-filterby-users' );

@@ -1,110 +1,112 @@
-jQuery(document).ready( $=>
-{
-    let descCookie = localStorage.getItem('showHideDescPlugins');
-    const oldTotal = $('.displaying-num').eq(0).text();
-    const calcTotal = $('#the-list tr').length - $('#the-list tr.plugin-update-tr').length;
+jQuery(document).ready( $ => {
+    class PluginsFilter {
+        constructor() {
+            this.descCookie = localStorage.getItem('showHideDescPlugins');
+            this.oldTotal = $('.displaying-num').eq(0).text();
+            this.calcTotal = $('#the-list tr').length - $('#the-list tr.plugin-update-tr').length;
 
-    const updtTotals = ()=> {
-        let nowTotal = $('#the-list tr:visible').length - $('#the-list tr.plugin-update-tr:visible').length;
-        let theNum = nowTotal == calcTotal ? oldTotal : nowTotal;
-        $('.displaying-num').text(theNum + " items");
-    }
+            this.filterSelectors = [
+                'td.plugin-title > strong',
+                'td.column-description .plugin-description',
+                'td.column-description div.plugin-version-author-uri a:first'
+            ];
 
-    const descAction = e=>{
-        if( !$(e.target).hasClass('active') ) {
-            $('div.plugin-description, div.row-actions').hide();
-            localStorage.setItem('showHideDescPlugins', true);
-            $(e.target).addClass('active b5f-active');
-        } 
-        else {
-            $('div.plugin-description, div.row-actions').show();
-            localStorage.removeItem('showHideDescPlugins');
-            $(e.target).removeClass('active b5f-active');
+            this.init();
         }
-    };
-    const allEData = ()=> {
-        $('button.b5f-btn-status').each((i,v)=>{
-            $(v).attr('title', $(v).data('titleShow'));
-        });
-    };
-    const swapClasses = e=>{
-        let status = $(e.target).attr('id').includes('inactive') 
-            ? 'active' : 'inactive';
-        if( !$(e.target).hasClass('active') ) {
-            resetList();
-            $('tr.'+status+', tr.plugin-update-tr').hide();
-            $(e.target).addClass('active b5f-active');
-            allEData();
-            $(e.target).attr('title', $(e.target).data('titleHide'))
-        } 
-        else {
-            $('#the-list tr').show();
-            $(e.target).removeClass('active b5f-active');
-            $(e.target).attr('title', $(e.target).data('titleShow'))
+
+        init() {
+            B5F_Common.createCustomSelectors();
+            $('div.tablenav.top div.alignleft.actions.bulkactions').after(ADTW.html);
+
+            $('#hide-desc,#hide-active,#hide-inactive, #hide-mine').click(e => e.preventDefault());
+            $('#hide-desc').click(this.descAction.bind(this));
+            $('#hide-active').click(this.swapClasses.bind(this));
+            $('#hide-inactive').click(this.swapClasses.bind(this));
+            $('#hide-mine').click(this.swapMines.bind(this));
+
+            $("#b5f-plugins-filter").on('focus', e => {
+                if ($(e.target).val().length === 0) this.resetList();
+            });
+            $("#b5f-plugins-filter").on('input', (e) => {
+                B5F_Common.daDelay( 
+                    (param) => {
+                        B5F_Common.daFilterByKeyword(param, document, this.filterSelectors);
+                        this.updtTotals();
+                    }, 
+                    B5F_Common.daNormalizeStr($(e.target).val()) 
+                );
+            });
+
+            $('.close-icon').click(() => {
+                this.resetList();
+                this.updtTotals(); 
+            });
+
+            if (this.descCookie) $('#hide-desc').click();
         }
-        updtTotals();
-    };
 
-    const daDelay = (callback, param) => {
-        setTimeout(function() {
-            callback(param);
-        }, 800);
-    };
+        updtTotals() {
+            let nowTotal = $('#the-list tr:visible').length - $('#the-list tr.plugin-update-tr:visible').length;
+            let theNum = nowTotal == this.calcTotal ? this.oldTotal : nowTotal;
+            $('.displaying-num').text(theNum + " items");
+        }
 
-    const daNormalizeStr = str => { // stackoverflow.com/a/37511463
-        return str.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toLowerCase();
-    };
+        descAction(e) {
+            if (!$(e.target).hasClass('active')) {
+                $('div.plugin-description, div.row-actions').hide();
+                localStorage.setItem('showHideDescPlugins', true);
+                $(e.target).addClass('active b5f-active');
+            } else {
+                $('div.plugin-description, div.row-actions').show();
+                localStorage.removeItem('showHideDescPlugins');
+                $(e.target).removeClass('active b5f-active');
+            }
+        }
 
-    function daFilterByKeyword_NEW(e) {
-        // Escape special characters in the keyword
-        const escapedKeyword = e.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
-        const regex = new RegExp(escapedKeyword, 'i'); // 'i' for case-insensitive search
-    
-        $('tbody#the-list tr').hide().filter((i, v) => {
-            let titleText = $(v).find('td.plugin-title').text();
-            let descriptionText = $(v).find('td.column-description').text();
-            let combinedText = titleText + ' ' + descriptionText;
-            console.log(combinedText);
-            return regex.test(combinedText);
-        }).show();
-        updtTotals();
+        allEData() {
+            $('button.b5f-btn-status').each((i,v) => {
+                $(v).attr('title', $(v).data('titleShow'));
+            });
+        }
+
+        swapClasses(e) {
+            let status = $(e.target).attr('id').includes('inactive') 
+                ? 'active' : 'inactive';
+            if (!$(e.target).hasClass('active')) {
+                this.resetList();
+                $('tr.'+status+', tr.plugin-update-tr').hide();
+                $(e.target).addClass('active b5f-active');
+                this.allEData();
+                $(e.target).attr('title', $(e.target).data('titleHide'));
+            } else {
+                $('#the-list tr').show();
+                $(e.target).removeClass('active b5f-active');
+                $(e.target).attr('title', $(e.target).data('titleShow'));
+            }
+            this.updtTotals();
+        }
+
+        swapMines(e) {
+            if (!$(e.target).hasClass('active')) {
+                this.resetList();
+                $("#the-list tr:notContains('"+ADTW.plugin_users+"')").hide();
+                $(e.target).addClass('active b5f-active');
+                this.allEData();
+                $(e.target).attr('title', $(e.target).data('titleHide'));
+            } else {
+                $('#the-list tr').show();
+                $(e.target).removeClass('active b5f-active');
+                $(e.target).attr('title', $(e.target).data('titleShow'));
+            }
+            this.updtTotals();
+        }
+
+        resetList() {
+            $('tbody#the-list tr').show();
+            $("#b5f-plugins-filter").val('');
+            $('button.b5f-btn-status').removeClass('active b5f-active');
+        }
     }
 
-    const daFilterByKeyword = e => {
-        var regex = new RegExp('((.|\\n)*)' + e); // stackoverflow.com/a/159140
-        
-        $('tbody#the-list tr').hide().filter((i,v)=>{
-            let captio = daNormalizeStr( $(v).text() );
-            return regex.test(captio);
-        }).show();
-        updtTotals();
-    }; 
-
-    const resetList = () => {
-        $('tbody#the-list tr').show();
-        $("#b5f-plugins-filter").val('');
-        $('button.b5f-btn-status').removeClass('active b5f-active');
-    }
-
-    $('div.tablenav.top div.alignleft.actions.bulkactions').after(ADTW.html);
-
-    $('#hide-desc,#hide-active,#hide-inactive').click( e=>e.preventDefault() );
-
-    $('#hide-desc').click(descAction);
-    $('#hide-active').click(swapClasses);
-    $('#hide-inactive').click(swapClasses);
-
-    $("#b5f-plugins-filter").on('focus', e=>{
-        if ($(e.target).val().length === 0) resetList();
-    });
-    $("#b5f-plugins-filter").on('input', function() {
-        daDelay( daFilterByKeyword, daNormalizeStr($(this).val()) );
-    });
-
-    $('.close-icon').click(()=>{
-        resetList();
-        updtTotals(); 
-    });
-
-    if( descCookie ) $('#hide-desc').click();
+    new PluginsFilter();
 });

@@ -105,7 +105,7 @@ class HooksAppearance {
 				'mtt-hide-help', 
 				ADTW_URL . '/assets/hide-help.css', 
 				[], 
-				ADTW()->cache('/assets/hide-help.css') 
+				ADTW()->cache('hide-help.css') 
 		);
 		wp_enqueue_style( 'mtt-hide-help' );
 	}

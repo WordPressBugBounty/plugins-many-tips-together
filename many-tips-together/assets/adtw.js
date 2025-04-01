@@ -1,6 +1,5 @@
 jQuery(document).ready( $=>{
     function toggleDescription() {
-        console.log('diacho')
         if ($('#adminbar_custom_enable').val() == '1') {
             $('#b5f_admin_tweaks-adminbar_custom_enable .description').hide();
         } else {

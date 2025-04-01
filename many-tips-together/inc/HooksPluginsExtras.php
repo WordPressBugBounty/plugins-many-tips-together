@@ -147,17 +147,24 @@ class HooksPluginsExtras {
      * CSS and JS for Filter By
 	 */
 	public function printSnippetsScripts() {
+        $assets = ADTW_URL . '/assets';
 		wp_register_style( 
             'mtt-filterby-snippets', 
-            ADTW_URL . '/assets/filter-listings.css', 
+            "$assets/filter-listings.css", 
             [], 
-            ADTW()->cache('/assets/filter-listings.css')  
+            ADTW()->cache('filter-listings.css')  
 		);
 		wp_register_script( 
-            'mtt-filterby-snippets', 
-            ADTW_URL . '/assets/filter-snippets.js', 
+            'mtt-filters', 
+            "$assets/filters-common.js", 
             [], 
-            ADTW()->cache('/assets/filter-snippets.js')  
+            ADTW()->cache('filters-common.js')
+        );
+        wp_register_script( 
+            'mtt-filterby-snippets', 
+            "$assets/filter-snippets.js", 
+            ['mtt-filters', 'jquery'], 
+            ADTW()->cache('filter-snippets.js')  
 		);
 		wp_enqueue_style( 'mtt-filterby-snippets' );
 		wp_enqueue_script( 'mtt-filterby-snippets' );
