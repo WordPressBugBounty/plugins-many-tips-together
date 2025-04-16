@@ -2,8 +2,8 @@
 Contributors: brasofilo
 Tags: customize, admin interface, profile, login, maintenance mode
 Requires at least: 5.0
-Tested up to: 6.7.1
-Stable tag: 3.3.2
+Tested up to: 6.8
+Stable tag: 3.3.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -55,15 +55,20 @@ Don't hesitate in posting a new topic here in [WordPress support forum](https://
 
 
 == Screenshots ==
-1. Plugin settings, Profile page adjustments
-2. Profile page with adjustments
-3. Website with Maintenance Mode enabled
-4. Customized Login page
-5. Post Listing with ID and Thumbnail columns. Draft posts with another background color. Help tab hidden.
-6. Media Library with ID column, bigger Thumbnails and All Thumbs listing. Download button in action rows.
-7. Plugins page with different color for Inactive and custom color for selected authors. Simpler description and Last Updated information.
+1. Mind map with all features
+2. Plugin settings, Profile page adjustments
+3. Profile page with adjustments
+4. Website with Maintenance Mode enabled
+5. Customized Login page
+6. Post Listing with ID and Thumbnail columns. Draft posts with another background color. Help tab hidden.
+7. Media Library with ID column, bigger Thumbnails and All Thumbs listing. Download button in action rows.
+8. Plugins page with different color for Inactive and custom color for selected authors. Simpler description and Last Updated information.
 
 == Changelog ==
+
+**Version 3.3.3**
+
+* Improved plugin filtering: better show/hide descriptions
 
 **Version 3.3.2**
 

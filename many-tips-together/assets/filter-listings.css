@@ -1,3 +1,6 @@
+button.b5f-button {
+    padding: 0 8px !important;
+}
 .b5f-active { 
     font-weight: 800 !important;
     background: #1e8cbe !important;

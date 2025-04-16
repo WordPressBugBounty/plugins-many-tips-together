@@ -8,7 +8,7 @@ class AdminTweaks {
     /**
      * Plugin current version
      */
-    const VERSION = "3.3.2";
+    const VERSION = "3.3.3";
 
     /**
      * Plugin name

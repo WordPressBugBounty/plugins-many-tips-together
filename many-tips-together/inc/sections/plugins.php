@@ -151,6 +151,15 @@ endif;
                     'content' => "<br>" . ADTW()->renderHintImg('plugins-filtering.png'),
                 )
             ),
+            array( # Hide description
+                'id'       => 'plugins_live_description',
+                'type'     => 'switch',
+                'title' => esc_html__('Also hide row actions, not only descriptions', 'mtt'),
+                'default'  => false,
+                'on' => esc_html__('On', 'mtt'),
+                'off' => esc_html__('Off', 'mtt'),
+                'required' => array('plugins_live_filter', '=', true),
+            ),
             // MS: don't show
             array( # Block Upgrade check for all
                 'id'       => 'plugins_block_update_notice',
